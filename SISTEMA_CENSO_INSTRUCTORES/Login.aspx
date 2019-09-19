@@ -1,6 +1,6 @@
 ﻿<%@ Page Language="C#" AutoEventWireup="true" CodeBehind="Login.aspx.cs" Inherits="SISTEMA_CENSO_INSTRUCTORES.WebForm1" %>
 
-<!DOCTYPE html>
+
 
 <!DOCTYPE html>
 
@@ -39,7 +39,7 @@
     <%--<link rel="stylesheet" href="jqueryUI\jquery-ui.css" />--%>
     <link rel="stylesheet" href="Content/bootstrap-select.css"/>
 </head>
-<body style="background-image:url('img/fondo02.jpg'); background-size:cover 100% 100%; background-repeat: repeat-y">
+<body style="background-image:url('img/fondo05.jpg');">
     <br /><br /><br /><br /><br />
 <div class="container" style="width: 400px;margin: 50px auto; background-color: #F3EDED; border: 1px solid #ECE8E8; height: 475px; border-radius:8px;">
     <br />
@@ -55,7 +55,7 @@
     <div class ="row text-center">
             <%--<div class="col-lg-1"></div>--%>
             <div class="col-lg-12">
-                <span class="caja-titulo-text" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight:700;font-size:16px">SISTEMA DE ADMINISTRACIÓN</span>
+                <span class="caja-titulo-text" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight:700;font-size:16px; color:#049475">SISTEMA </span>
             </div>
             <%--<div class="col-lg-1"></div>--%>
         </div><br /><br />
@@ -74,14 +74,15 @@
        <div class="row col-lg-12 text-center">
            <div class="col-lg-2"></div>
            <div class="col-lg-10 text-center">
-               <img src="assets/img/ajax_loading.gif" width="20px" height ="20px" id="loadimg" style="margin:10px;"/>
+               <img src="img/ajax_loading.gif" width="20px" height ="20px" id="loadimg" style="margin:10px;"/>
                <span class="col-lg-10" id="error" style=color:red;font-size:12px;>Usuario o Contraseña invalida</span>
            </div>
            <div class="col-lg-1"></div>
        </div>
 				<br/>
-				<button class="btn btn-lg  btn-block btn-signin" id="IngresoLog" type="Button" style="background-color:#167FC1; color:#ffffff">Entrar</button>
+				<button class="btn btn-lg  btn-block btn-signin" id="IngresoLog" type="Button" style="background-color:#049475; color:#ffffff">Entrar</button>
 		 	</form>
 </div>
+    
 </body>
 </html>

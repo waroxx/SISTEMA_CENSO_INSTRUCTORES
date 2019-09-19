@@ -185,8 +185,15 @@
     <Content Include="Content\Site.css" />
     <Content Include="Default.aspx" />
     <Content Include="Account\Web.config" />
+    <Content Include="img\ajax_loading.gif" />
     <Content Include="img\fondo02.jpg" />
+    <Content Include="img\fondo03.jpg" />
+    <Content Include="img\fondo04.jpg" />
+    <Content Include="img\fondo05.jpg" />
+    <Content Include="img\fondo06.jpg" />
+    <Content Include="img\FONDO2.jpg" />
     <Content Include="img\Logo-Censo2020-2.png" />
+    <Content Include="img\logo-newblue.png" />
     <Content Include="Login.aspx" />
     <Content Include="Scripts\bootstrap.bundle.js" />
     <Content Include="Scripts\bootstrap.bundle.min.js" />
@@ -210,6 +217,7 @@
     <Content Include="Content\bootstrap-reboot.css.map" />
     <Content Include="Content\bootstrap-grid.min.css.map" />
     <Content Include="Content\bootstrap-grid.css.map" />
+    <Content Include="Formulario.aspx" />
     <None Include="Scripts\jquery-3.4.1.intellisense.js" />
     <Content Include="Scripts\jquery-3.4.1.js" />
     <Content Include="Scripts\jquery-3.4.1.min.js" />
@@ -415,6 +423,13 @@
     </Compile>
     <Compile Include="Login.aspx.designer.cs">
       <DependentUpon>Login.aspx</DependentUpon>
+    </Compile>
+    <Compile Include="Formulario.aspx.cs">
+      <DependentUpon>Formulario.aspx</DependentUpon>
+      <SubType>ASPXCodeBehind</SubType>
+    </Compile>
+    <Compile Include="Formulario.aspx.designer.cs">
+      <DependentUpon>Formulario.aspx</DependentUpon>
     </Compile>
   </ItemGroup>
   <ItemGroup>
