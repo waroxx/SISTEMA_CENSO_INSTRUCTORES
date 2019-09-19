@@ -392,7 +392,7 @@
     <Compile Include="Global.asax.cs">
       <DependentUpon>Global.asax</DependentUpon>
     </Compile>
-    <Compile Include="Models\dbcontext.cs" />
+    <Compile Include="Models\Dbcontext.cs" />
     <Compile Include="Models\IdentityModels.cs" />
     <Compile Include="Models\T_ADMINISTRADORES2020.cs" />
     <Compile Include="Models\T_DATOS_DEL_COLABORADOR.cs" />

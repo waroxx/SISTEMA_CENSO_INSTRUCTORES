@@ -49,5 +49,10 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
 
         [StringLength(40)]
         public string REGISTRADO_POR { get; set; }
+
+        public DateTime? FECHA_UPDATE { get; set; }
+
+        [StringLength(40)]
+        public string UPDATE_POR { get; set; }
     }
 }

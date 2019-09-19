@@ -5,10 +5,10 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class dbcontext : DbContext
+    public partial class Dbcontext : DbContext
     {
-        public dbcontext()
-            : base("name=dbcontext")
+        public Dbcontext()
+            : base("name=Dbcontext1")
         {
         }
 
@@ -237,6 +237,10 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
 
             modelBuilder.Entity<T_EXPERIENCIA_INSTRUCTORES>()
                 .Property(e => e.REGISTRADO_POR)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<T_EXPERIENCIA_INSTRUCTORES>()
+                .Property(e => e.UPDATE_POR)
                 .IsUnicode(false);
         }
     }
