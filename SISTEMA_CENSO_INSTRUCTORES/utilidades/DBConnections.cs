@@ -15,12 +15,12 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
             {
                 using (var ctx = new Dbcontext())
                 {
-                    var admin = ctx.T_ADMINISTRADORES2020.Where(a => a.USUARIO == ("CGR\\" + usuario.ToUpper()) && a.ROL == "ADMIN").FirstOrDefault();
+                    var admin = ctx.T_ADMINISTRADORES2020.Where(a => a.USUARIO == (usuario.ToUpper()) && a.ROL == "ADMIN").FirstOrDefault();
                     if (admin != null)
                     {
                         return "ADMIN";
                     }
-                    var u = ctx.T_DATOS_PARA_CENSO2020.Where(d => d.USUARIO_REGISTRO == ("CGR\\" + usuario.ToUpper())).FirstOrDefault();
+                    var u = ctx.T_DATOS_PARA_CENSO2020.Where(d => d.USUARIO_REGISTRO == (usuario.ToUpper())).FirstOrDefault();
                     if (u == null)
                     {
                         return "";
