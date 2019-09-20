@@ -27,10 +27,10 @@
     <%--<script src="jqueryUI/jquery-ui.js"></script>--%>
     <script src="Scripts/bootstrap-select.js"></script>
     <script src="scripts.js"></script>
-
+   
     <link rel="stylesheet" href="bootstrap/css/bootstrap.css"/>
-     <link rel="icon" href="assets/img/favicon.ico">
     <link rel="stylesheet" type="text/css" href="~/estilos.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <title></title>
 </head>
 <body>
@@ -41,9 +41,9 @@
 <div class="panel-body">
 	<br /><br />
     <div class="row">
-    <div class="col-md-4" style="border:solid;border-width:2px;border-radius:5px; height:150px;"></div></div>	
+    <div class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4; height:150px;"></div></div>	
     <br /><br /><br /><br />
-    <div class="row" style="border:solid;border-radius:6px;border-width:1px;">
+    <div class="row" >
         <div class="col-md-3" style="text-align:center">
             <label style="font-size:16px;">Tipo de Actividad</label>
         </div>
@@ -53,12 +53,145 @@
          <div class="col-md-3" style="text-align:center">
             <label style="font-size:16px;">Tema</label>
         </div>
-         <div class="col-md-3" style="text-align:center">
+         <div class="col-md-2" style="text-align:center">
             <label style="font-size:16px;">Año</label>
         </div>
-    </div>					
+    </div>
+    <br />	
+<div id="experiencias">
+    <div class="row" >
+        <div class=" form-group col-md-3" style="text-align:center" >
+            <select class="selectpicker seltipo" id="seltipo">
+                <option selected="selected">Seleccione</option>
+               <option value="1">Censo</option>
+               <option value="2">Encuesta</option>
+               <option value="3">Investigación Especial</option>
+               <option value="4">Otros(Especifique)</option>
+            </select>
+            <br /><br />
+            <div class="form-group otrotipo" id="otrotipo" style="display:none;"><input type="text" class="form-control otrotipo" style=" width:220px; margin-left:35px"/></div>
+        </div>
+         <div class="col-md-3" style="text-align:center">
+            <input type="text" class="form-control" id="desc"/>
+        </div>
+         <div class="col-md-3" style="text-align:center">
+           <select class="selectpicker">
+                <option selected="selected" value="0">Seleccione</option>
+               <option value="1">Metodología</option>
+               <option value="2">Cartografía</option>
+               <option value="3">Administrativo y Presupuesto</option>
+               <option value="4">Tecnología</option>
+
+            </select>
+        </div>
+         <div class="col-md-2" style="text-align:center">
+            <input type="text" class="form-control" id="year"/>
+        </div>
+         <div class="col-md-1" style="text-align:center">
+             <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete" >
+                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
+            </a>
+        </div>
+         <div class="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
+    </div>
+    
+</div>
+    	<br />
+    <div class="row">
+        <div class="col-md-2 col-md-offset-5">
+        <a class="btn btn-success" href="javascript:void(0);" id="agregar" >
+                <i class="fa fa-plus " aria-hidden="true" style="font-size:24px;"></i>&nbsp;&nbsp;<b style="font-size:16px">Agregar</b>
+            </a>
+         </div>
+    </div>			
 </div>
 </div>
 </div>
+    <script>
+        
+        $(document).ready(function () {
+            prepararSeltipo()
+            prepararEliminar()
+            $("#agregar").click(function () {
+                $('#experiencias').append(` <div class="row" >
+        <div class=" form-group col-md-3" style="text-align:center" >
+            <select class="selectpicker seltipo" id="seltipo">
+                <option selected="selected">Seleccione</option>
+               <option value="1">Censo</option>
+               <option value="2">Encuesta</option>
+               <option value="3">Investigación Especial</option>
+               <option value="4">Otros(Especifique)</option>
+            </select>
+            <br /><br />
+            <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
+        </div>
+         <div class="col-md-3" style="text-align:center">
+            <input type="text" class="form-control" id="desc"/>
+        </div>
+         <div class="col-md-3" style="text-align:center">
+           <select class="selectpicker">
+                <option selected="selected" value="0">Seleccione</option>
+               <option value="1">Metodología</option>
+               <option value="2">Cartografía</option>
+               <option value="3">Administrativo y Presupuesto</option>
+               <option value="4">Tecnología</option>
+
+            </select>
+        </div>
+         <div class="col-md-2" style="text-align:center">
+            <input type="text" class="form-control" id="year"/>
+        </div>
+         <div class="col-md-1" style="text-align:center">
+             <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
+                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
+            </a>
+        </div>
+          <div class ="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
+    </div>`);
+                $(".selectpicker").selectpicker();
+                prepararSeltipo();
+                prepararEliminar();
+
+            });
+        });
+
+
+        function prepararSeltipo() {
+            let seltipo = $(".selectpicker.seltipo");
+            $(seltipo).each(function () {
+                $(this).change(function () {
+                    let padre = $(this).closest('.row');
+                    let tipo = $(this).val();
+                    let otipo = $(padre).find(".otrotipo");
+
+                    if (tipo == '4') {
+                        $(otipo).css('display', 'block');
+                    }
+                    else {
+                        $(otipo).css('display', 'none');
+                    }
+
+                });
+
+            });
+        }
+
+
+
+        function prepararEliminar() {
+            let btnEliminar = $(".eliminar");
+            $(btnEliminar).each(function () {
+                $(this).click(function () {
+                    let padre = $(this).closest('.row');
+                    let rows = $(padre).closest("#experiencias");
+                    if ($(rows).children().length > 1) {
+                        $(padre).remove();
+                    }
+                });
+
+            });
+        }
+
+    </script>
 </body>
 </html>
