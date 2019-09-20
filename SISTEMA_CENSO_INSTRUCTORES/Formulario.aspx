@@ -41,7 +41,7 @@
 <br /><div class="row">
 <div class="col-md-10"></div>
  <div class="col-md-2" style="text-align:right">
-    <a class="btn btn-basic" href="javascript:void(0);" id="salir" style="background-color:#e5007f" >
+    <a class="btn btn-basic" href="javascript:CerrarSession();" id="salir" style="background-color:#e5007f" >
                 <b style="font-size:18px; color:white;">Salir</b>&nbsp;&nbsp;<i class="fa fa-share" aria-hidden="true" style="font-size:24px; color:white;"></i>
             </a>
 </div></div>
@@ -229,6 +229,21 @@
                 contentType: "application/JSON",
                 success: function (resp) {
                     $("#datos-generales").html(resp.d);
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        function CerrarSession() {
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/cerrarSession",
+                contentType: "application/JSON",
+                success: function (resp) {
+                    if (resp.d) {
+                        window.location.replace("Default.aspx");
+                    }
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);
