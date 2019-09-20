@@ -48,7 +48,9 @@
 <div class="panel-body">
 	<br /><br />
     <div class="row">
-    <div class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4; height:150px;"></div></div>	
+    <div id="datos-generales" class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4;padding-left:50px;padding-right:50px;">
+        <span>Cargando...</span>
+    </div></div>	
     <br /><br /><br /><br />
     <div class="row" >
         <div class="col-md-3" style="text-align:center">
@@ -124,6 +126,7 @@
     <script>
         
         $(document).ready(function () {
+            getDatosGenerales()
             prepararSeltipo()
             prepararEliminar()
       
@@ -216,6 +219,21 @@
                 $("#experiencias").removeAttr('style');
             }
 
+        }
+
+
+        function getDatosGenerales() {
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/datosBuscarDatosGenerales",
+                contentType: "application/JSON",
+                success: function (resp) {
+                    $("#datos-generales").html(resp.d);
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
         }
 
     </script>

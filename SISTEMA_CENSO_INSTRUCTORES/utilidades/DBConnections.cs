@@ -13,7 +13,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         {
             try
             {
-                using (var ctx = new Dbcontext())
+                using (var ctx = new Contexto())
                 {
                     var admin = ctx.T_ADMINISTRADORES2020.Where(a => a.USUARIO == (usuario.ToUpper()) && a.ROL == "ADMIN").FirstOrDefault();
                     if (admin != null)
@@ -40,7 +40,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         {
             try
             {
-                using (var ctx = new Dbcontext())
+                using (var ctx = new Contexto())
                 {
                     T_DATOS_PARA_CENSO2020 censo = ctx.T_DATOS_PARA_CENSO2020.Where(c => c.CED == CED).FirstOrDefault();
                     if (censo == null)
@@ -61,7 +61,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         {
             try
             {
-                using (var ctx = new Dbcontext())
+                using (var ctx = new Contexto())
                 {
                     List<T_EXPERIENCIA_INSTRUCTORES> experiencias = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == CED).ToList();
                     if (experiencias == null)
@@ -81,7 +81,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         public bool postExpInstructores(List<T_EXPERIENCIA_INSTRUCTORES> experiencias, string CEDULA, string usuario)
         {
             try { 
-            using (var ctx = new Dbcontext())
+            using (var ctx = new Contexto())
             {
                     var Exp = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == experiencias[0].CED && e.INDICE == experiencias[0].INDICE).FirstOrDefault();
                     var deletes = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == Exp.CED);

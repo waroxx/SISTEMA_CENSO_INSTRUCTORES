@@ -16,12 +16,12 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         public string SessionUser;
         protected void Page_Load(object sender, EventArgs e)
         {
-            //string nombre = (string)Session["USUARIO"];
-            //if (nombre == null)
-            //{
-            //    Response.Redirect("Login.aspx");
-            //}
-            //SessionUser = nombre;
+            string nombre = (string)Session["USUARIO"];
+            if (nombre == null)
+            {
+                Response.Redirect("Default.aspx");
+            }
+            SessionUser = nombre;
         }
 
        [WebMethod]
@@ -29,13 +29,13 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         {
             WebForm2 f = new WebForm2();
 
-            if (f.SessionUser == null)
+            if (f.session_user() == null)
             {
                 return "ERROR";
             }
             string res = "";
             DBConnections dbc = new DBConnections();
-            string rol = dbc.getCedFromUser(f.SessionUser);
+            string rol = dbc.getCedFromUser(f.session_user());
             if(rol == "ADMIN")
             {
                 res = HtmlPaterns.BUSCADOR_CEDULA;
@@ -63,12 +63,12 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         {
             WebForm2 f = new WebForm2();
 
-            if (f.SessionUser == null)
+            if (f.session_user() == null)
             {
                 return "ERROR";
             }
             DBConnections dbc = new DBConnections();
-            var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.SessionUser));
+            var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.session_user()));
             JObject jo = JObject.FromObject(Exp);
             return jo.ToString();
         }
@@ -78,13 +78,13 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         {
             WebForm2 f = new WebForm2();
 
-            if (f.SessionUser == null)
+            if (f.session_user() == null)
             {
                 return "ERROR";
             }
             var Exp = JObject.Parse(experiencias).ToObject<List<T_EXPERIENCIA_INSTRUCTORES>>();
             DBConnections dbc = new DBConnections();
-            dbc.postExpInstructores(Exp,dbc.getCedFromUser(f.SessionUser), f.SessionUser);
+            dbc.postExpInstructores(Exp,dbc.getCedFromUser(f.session_user()), f.session_user());
             return "true";
         }
 
@@ -99,6 +99,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         {
             return cerrar_session();
         }
+
         protected bool cerrar_session()
         {
             var nom = Session["USUARIO"];
@@ -106,6 +107,11 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             Session["USUARIO"] = null;
             ret = true;
             return ret;
+        }
+
+        private string session_user()
+        {
+            return (string)Session["USUARIO"];
         }
     }
 }

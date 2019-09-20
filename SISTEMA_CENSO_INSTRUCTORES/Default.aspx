@@ -82,6 +82,57 @@
 				<button class="btn btn-lg  btn-block btn-signin" id="IngresoLog" type="Button" style="background-color:#049475; color:#ffffff">Entrar</button>
 		 	</form>
 </div>
-    
+    <script>
+       $(document).ready(function () {
+           $.ajax({
+               type: "POST",
+               url: "Default.aspx/currentUser",
+               contentType: "application/JSON",
+               success: function (resp) {
+                   if (resp.d.indexOf("CGR\\") == -1) {
+                       $("#usuario").attr("data-original-title", "Ejemplo:  EBECKFORD");
+                       console.log(resp.d);
+                   } else {
+                       $("#usuario").attr("data-original-title", "Ejemplo:  " + resp.d.replace("CGR\\", ""));
+                   }
+               },
+               error: function (xhr, status, error) {
+                   alert(xhr.responseText);
+               }
+           });
+           $('[data-toggle="login"]').tooltip();
+           $("#usuario, #password").keypress(function (e) {
+               var k = e.keyCode || e.which;
+               if (k == 13) {
+                   $("#IngresoLog").trigger("click");
+               }
+           });
+           $("#error").hide();
+           $("#loadimg").hide();
+           $("#IngresoLog").click(function () {
+               $("#error").hide();
+               $("#loadimg").show();
+               $.ajax({
+                   type: "POST",
+                   url: "Default.aspx/login",
+                   contentType: "application/JSON",
+                   data: '{ "user":"' + $('#usuario').val().toUpperCase()  + '", "password":"' + $('#password').val() + '"}',
+                   success: function (resp) {
+                       $("#loadimg").hide();
+                       if (!resp.d) {
+                           $("#error").show();
+                       } else {
+                           window.location.replace("Formulario.aspx");
+                       }
+                       //alert(resp.d);
+                   },
+                   error: function (xhr, status, error) {
+                       $("#loadimg").hide();
+                       alert(xhr.responseText);
+                   }
+               });
+           });
+       });
+   </script>
 </body>
 </html>
