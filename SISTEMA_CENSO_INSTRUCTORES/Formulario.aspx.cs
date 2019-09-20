@@ -16,12 +16,12 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         public string SessionUser;
         protected void Page_Load(object sender, EventArgs e)
         {
-            string nombre = (string)Session["USUARIO"];
-            if (nombre == null)
-            {
-                Response.Redirect("Login.aspx");
-            }
-            SessionUser = nombre;
+            //string nombre = (string)Session["USUARIO"];
+            //if (nombre == null)
+            //{
+            //    Response.Redirect("Login.aspx");
+            //}
+            //SessionUser = nombre;
         }
 
        [WebMethod]

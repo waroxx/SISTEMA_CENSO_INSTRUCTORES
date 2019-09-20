@@ -38,6 +38,13 @@
 
 <div class="panel panel-primary col-md-10 col-md-offset-1"  style="margin-top:20px">
 <div class="panel-heading"><h2 class="panel-title" style="text-align:center; font-weight:bold; font-size:20px">Formulario de Inscripción para Instructores</h2></div>
+<br /><div class="row">
+<div class="col-md-10"></div>
+ <div class="col-md-2" style="text-align:right">
+    <a class="btn btn-basic" href="javascript:void(0);" id="salir" style="background-color:#e5007f" >
+                <b style="font-size:18px; color:white;">Salir</b>&nbsp;&nbsp;<i class="fa fa-share" aria-hidden="true" style="font-size:24px; color:white;"></i>
+            </a>
+</div></div>
 <div class="panel-body">
 	<br /><br />
     <div class="row">
@@ -98,9 +105,16 @@
 </div>
     	<br />
     <div class="row">
-        <div class="col-md-2 col-md-offset-5">
+        <div class="col-md-1"></div>
+        <div class="col-md-2" >
         <a class="btn btn-success" href="javascript:void(0);" id="agregar" >
                 <i class="fa fa-plus " aria-hidden="true" style="font-size:24px;"></i>&nbsp;&nbsp;<b style="font-size:16px">Agregar</b>
+            </a>
+         </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-2" >
+        <a class="btn btn-primary" href="javascript:void(0);" id="enviar" >
+                <b style="font-size:16px">Enviar</b>&nbsp;&nbsp;<i class="fa fa-send " aria-hidden="true" style="font-size:24px;"></i>
             </a>
          </div>
     </div>			
@@ -112,6 +126,7 @@
         $(document).ready(function () {
             prepararSeltipo()
             prepararEliminar()
+      
             $("#agregar").click(function () {
                 $('#experiencias').append(` <div class="row" >
         <div class=" form-group col-md-3" style="text-align:center" >
@@ -151,7 +166,7 @@
                 $(".selectpicker").selectpicker();
                 prepararSeltipo();
                 prepararEliminar();
-
+                revisarHijos();
             });
         });
 
@@ -186,10 +201,21 @@
                     let rows = $(padre).closest("#experiencias");
                     if ($(rows).children().length > 1) {
                         $(padre).remove();
+                        revisarHijos();
                     }
                 });
 
             });
+        }
+
+        function revisarHijos() {
+            if ($('#experiencias').children().length >= 5) {
+                $("#experiencias").attr('style','overflow-y:auto;overflow-x:hidden; height:455px');
+            }
+            else {
+                $("#experiencias").removeAttr('style');
+            }
+
         }
 
     </script>
