@@ -3,6 +3,7 @@ using SISTEMA_CENSO_INSTRUCTORES.Models;
 using SISTEMA_CENSO_INSTRUCTORES.utilidades;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -27,6 +28,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
        [WebMethod]
         public static string datosBuscarDatosGenerales()
         {
+            try { 
             WebForm2 f = new WebForm2();
 
             if (f.SessionUser == null)
@@ -56,26 +58,42 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                 res = res.Replace("{{ apellidos }}", datos.APELLIDOS);
             }
             return res;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return "ERROR";
+            }
         }
 
         [WebMethod]
         public static string getExperiencias()
         {
-            WebForm2 f = new WebForm2();
-
-            if (f.SessionUser == null)
+            try
             {
-                return "ERROR";
+                WebForm2 f = new WebForm2();
+
+                if (f.SessionUser == null)
+                {
+                    return "ERROR";
+                }
+                DBConnections dbc = new DBConnections();
+                var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.SessionUser));
+                JObject jo = JObject.FromObject(Exp);
+                return jo.ToString();
             }
-            DBConnections dbc = new DBConnections();
-            var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.SessionUser));
-            JObject jo = JObject.FromObject(Exp);
-            return jo.ToString();
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return "";
+            }
         }
 
         [WebMethod]
-        public static string postExperiencias(string experiencias )
+        public static string postExperiencias(string experiencias)
         {
+            bool r;
+            try { 
             WebForm2 f = new WebForm2();
 
             if (f.SessionUser == null)
@@ -84,8 +102,12 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             }
             var Exp = JObject.Parse(experiencias).ToObject<List<T_EXPERIENCIA_INSTRUCTORES>>();
             DBConnections dbc = new DBConnections();
-            dbc.postExpInstructores(Exp,dbc.getCedFromUser(f.SessionUser), f.SessionUser);
-            return "true";
+             r = dbc.postExpInstructores(Exp, dbc.getCedFromUser(f.SessionUser), f.SessionUser);
+        }catch(Exception e){
+                Debug.WriteLine(e.Message);
+                return "false";
+            }
+            return r.ToString();
         }
 
         [WebMethod]
