@@ -3,7 +3,6 @@ using SISTEMA_CENSO_INSTRUCTORES.Models;
 using SISTEMA_CENSO_INSTRUCTORES.utilidades;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -20,36 +19,36 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             string nombre = (string)Session["USUARIO"];
             if (nombre == null)
             {
-                Response.Redirect("Login.aspx");
+                Response.Redirect("Default.aspx");
             }
             SessionUser = nombre;
         }
 
-       [WebMethod]
+        [WebMethod]
         public static string datosBuscarDatosGenerales()
         {
-            try { 
             WebForm2 f = new WebForm2();
 
-            if (f.SessionUser == null)
+            if (f.session_user() == null)
             {
                 return "ERROR";
             }
             string res = "";
             DBConnections dbc = new DBConnections();
-            string rol = dbc.getCedFromUser(f.SessionUser);
-            if(rol == "ADMIN")
+            string rol = dbc.getCedFromUser(f.session_user());
+            if (rol == "ADMIN")
             {
                 res = HtmlPaterns.BUSCADOR_CEDULA;
             }
-            else if(rol=="")
+            else if (rol == "")
             {
                 res = "";
             }
             else if (rol == null)
             {
                 res = "ERROR";
-            }else
+            }
+            else
             {
                 var datos = dbc.getDatosGeneralesCenso(rol);
                 res = HtmlPaterns.MOSTRAR_DATOS;
@@ -58,56 +57,36 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                 res = res.Replace("{{ apellidos }}", datos.APELLIDOS);
             }
             return res;
-            }
-            catch (Exception e)
-            {
-                Debug.WriteLine(e.Message);
-                return "ERROR";
-            }
         }
 
         [WebMethod]
         public static string getExperiencias()
         {
-            try
-            {
-                WebForm2 f = new WebForm2();
+            WebForm2 f = new WebForm2();
 
-                if (f.SessionUser == null)
-                {
-                    return "ERROR";
-                }
-                DBConnections dbc = new DBConnections();
-                var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.SessionUser));
-                JObject jo = JObject.FromObject(Exp);
-                return jo.ToString();
-            }
-            catch (Exception e)
+            if (f.session_user() == null)
             {
-                Debug.WriteLine(e.Message);
-                return "";
+                return "ERROR";
             }
+            DBConnections dbc = new DBConnections();
+            var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.session_user()));
+            JObject jo = JObject.FromObject(Exp);
+            return jo.ToString();
         }
 
         [WebMethod]
         public static string postExperiencias(string experiencias)
         {
-            bool r;
-            try { 
             WebForm2 f = new WebForm2();
 
-            if (f.SessionUser == null)
+            if (f.session_user() == null)
             {
                 return "ERROR";
             }
             var Exp = JObject.Parse(experiencias).ToObject<List<T_EXPERIENCIA_INSTRUCTORES>>();
             DBConnections dbc = new DBConnections();
-             r = dbc.postExpInstructores(Exp, dbc.getCedFromUser(f.SessionUser), f.SessionUser);
-        }catch(Exception e){
-                Debug.WriteLine(e.Message);
-                return "false";
-            }
-            return r.ToString();
+            dbc.postExpInstructores(Exp, dbc.getCedFromUser(f.session_user()), f.session_user());
+            return "true";
         }
 
         [WebMethod]
@@ -121,6 +100,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         {
             return cerrar_session();
         }
+
         protected bool cerrar_session()
         {
             var nom = Session["USUARIO"];
@@ -128,6 +108,11 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             Session["USUARIO"] = null;
             ret = true;
             return ret;
+        }
+
+        private string session_user()
+        {
+            return (string)Session["USUARIO"];
         }
     }
 }
