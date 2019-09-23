@@ -50,7 +50,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             }else
             {
                 var datos = dbc.getDatosGeneralesCenso(rol);
-                res = HtmlPaterns.MOSTRAR_DATOS;
+                res = HtmlPaterns.MOSTRAR_DATOS; 
                 res = res.Replace("{{ cedula }}", datos.CED);
                 res = res.Replace("{{ nombres }}", datos.NOMBRES);
                 res = res.Replace("{{ apellidos }}", datos.APELLIDOS);
