@@ -38,10 +38,19 @@
 
 <div class="panel panel-primary col-md-10 col-md-offset-1"  style="margin-top:20px">
 <div class="panel-heading"><h2 class="panel-title" style="text-align:center; font-weight:bold; font-size:20px">Formulario de Inscripción para Instructores</h2></div>
+<br /><div class="row">
+<div class="col-md-10"></div>
+ <div class="col-md-2" style="text-align:right">
+    <a class="btn btn-basic" href="javascript:CerrarSession();" id="salir" style="background-color:#e5007f" >
+                <b style="font-size:18px; color:white;">Salir</b>&nbsp;&nbsp;<i class="fa fa-share" aria-hidden="true" style="font-size:24px; color:white;"></i>
+            </a>
+</div></div>
 <div class="panel-body">
 	<br /><br />
     <div class="row">
-    <div class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4; height:150px;"></div></div>	
+    <div id="datos-generales" class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4;padding-left:50px;padding-right:50px;">
+        <span>Cargando...</span>
+    </div></div>	
     <br /><br /><br /><br />
     <div class="row" >
         <div class="col-md-3" style="text-align:center">
@@ -98,9 +107,16 @@
 </div>
     	<br />
     <div class="row">
-        <div class="col-md-2 col-md-offset-5">
+        <div class="col-md-1"></div>
+        <div class="col-md-2" >
         <a class="btn btn-success" href="javascript:void(0);" id="agregar" >
                 <i class="fa fa-plus " aria-hidden="true" style="font-size:24px;"></i>&nbsp;&nbsp;<b style="font-size:16px">Agregar</b>
+            </a>
+         </div>
+        <div class="col-md-6"></div>
+        <div class="col-md-2" >
+        <a class="btn btn-primary" href="javascript:void(0);" id="enviar" >
+                <b style="font-size:16px">Enviar</b>&nbsp;&nbsp;<i class="fa fa-send " aria-hidden="true" style="font-size:24px;"></i>
             </a>
          </div>
     </div>			
@@ -110,8 +126,10 @@
     <script>
         
         $(document).ready(function () {
+            getDatosGenerales()
             prepararSeltipo()
             prepararEliminar()
+      
             $("#agregar").click(function () {
                 $('#experiencias').append(` <div class="row" >
         <div class=" form-group col-md-3" style="text-align:center" >
@@ -151,7 +169,7 @@
                 $(".selectpicker").selectpicker();
                 prepararSeltipo();
                 prepararEliminar();
-
+                revisarHijos();
             });
         });
 
@@ -186,9 +204,50 @@
                     let rows = $(padre).closest("#experiencias");
                     if ($(rows).children().length > 1) {
                         $(padre).remove();
+                        revisarHijos();
                     }
                 });
 
+            });
+        }
+
+        function revisarHijos() {
+            if ($('#experiencias').children().length >= 5) {
+                $("#experiencias").attr('style','overflow-y:auto;overflow-x:hidden; height:455px');
+            }
+            else {
+                $("#experiencias").removeAttr('style');
+            }
+
+        }
+
+
+        function getDatosGenerales() {
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/datosBuscarDatosGenerales",
+                contentType: "application/JSON",
+                success: function (resp) {
+                    $("#datos-generales").html(resp.d);
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        function CerrarSession() {
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/cerrarSession",
+                contentType: "application/JSON",
+                success: function (resp) {
+                    if (resp.d) {
+                        window.location.replace("Default.aspx");
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
             });
         }
 

@@ -5,10 +5,10 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
     using System.ComponentModel.DataAnnotations.Schema;
     using System.Linq;
 
-    public partial class Dbcontext : DbContext
+    public partial class Contexto : DbContext
     {
-        public Dbcontext()
-            : base("name=Dbcontext1")
+        public Contexto()
+            : base("name=Contexto")
         {
         }
 

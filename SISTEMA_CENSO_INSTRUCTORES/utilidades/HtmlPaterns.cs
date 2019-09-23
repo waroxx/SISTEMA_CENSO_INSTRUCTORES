@@ -22,13 +22,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         </div>
       </div>
       <div class='row'>
-        <a
-          class='btn'
-          style='background-color:#E5007F;color:#FFFFFF'
-          id='btn-buscar-cedula'
-        >
-          Buscar
-        </a>
+        <a class='btn' style='background-color:#E5007F;color:#FFFFFF' id='btn-buscar-cedula'>Buscar</a>
       </div>
       <div class='row'><br /></div>
       <div class='row' id='buscar-response'></div>";
