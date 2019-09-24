@@ -104,10 +104,10 @@
             <div class="form-group otrotipo" id="otrotipo" style="display:none;"><input type="text" class="form-control otrotipo" style=" width:220px; margin-left:35px"/></div>
         </div>
          <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control" id="desc"/>
+            <input type="text" class="form-control descripcion" id="desc"/>
         </div>
          <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker">
+           <select class="selectpicker seltema">
                 <option selected="selected" value="0">Seleccione</option>
                <option value="1">Metodología</option>
                <option value="2">Cartografía</option>
@@ -117,7 +117,7 @@
             </select>
         </div>
          <div class="col-md-2" style="text-align:center">
-            <input type="text" class="form-control" id="year"/>
+            <input type="text" class="form-control year" id="year"/>
         </div>
          <div class="col-md-1" style="text-align:center">
              <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete" >
@@ -138,7 +138,7 @@
          </div>
         <div class="col-md-6"></div>
         <div class="col-md-2" >
-        <a class="btn btn-primary" href="javascript:void(0);" id="enviar" >
+        <a class="btn btn-primary" href="javascript:Enviar();" id="enviar" >
                 <b style="font-size:16px">Enviar</b>&nbsp;&nbsp;<i class="fa fa-send " aria-hidden="true" style="font-size:24px;"></i>
             </a>
          </div>
@@ -168,11 +168,11 @@
             <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
         </div>
          <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control" id="desc"/>
+            <input type="text" class="form-control descripcion" id="desc"/>
         </div>
          <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker">
-                <option selected="selected" value="0">Seleccione</option>
+           <select class="selectpicker seltema">
+                <option selected="selected " value="0">Seleccione</option>
                <option value="1">Metodología</option>
                <option value="2">Cartografía</option>
                <option value="3">Administrativo y Presupuesto</option>
@@ -181,7 +181,7 @@
             </select>
         </div>
          <div class="col-md-2" style="text-align:center">
-            <input type="text" class="form-control" id="year"/>
+            <input type="text" class="form-control year" id="year"/>
         </div>
          <div class="col-md-1" style="text-align:center">
              <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
@@ -291,6 +291,55 @@
                 }
             });
         }
+
+        function LeerHijos() {
+            let hijos = $("#experiencias").children();
+            let arrhijo = [];
+            hijos.each(function (key,el) {
+                let stipo = $(el).find(".selectpicker.seltipo");
+                let otipo = $(el).find(".form-control.otrotipo");
+                let desc=$(el).find(".descripcion")
+                let stema = $(el).find(".selectpicker.seltema");
+                let year = $(el).find(".year");
+
+                let obj = {
+                    INDICE:key,
+                    TIPO_ACTIVIDAD: $(stipo[0]).val(),
+                    TIPO_ACTIVIDAD_ESP: $(otipo[0]).val(),
+                    DESCRIPCION: $(desc[0]).val(),
+                    TEMA: $(stema[0]).val(),
+                    YEAR:$(year[0]).val()
+                }
+                arrhijo.push(obj);
+            });
+            return arrhijo;
+        }
+
+        function Enviar() {
+            let d = JSON.stringify(LeerHijos());
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/postExperiencias",
+                contentType: "application/JSON",
+                data:"{'experiencias':'"+d+"'}",
+                success: function (resp) {
+                    if (resp.d === "True") {
+                        alert("Datos Guadados con Éxito");
+                    }
+                   else if (resp.d === "False") {
+                        alert("Error: datos no guardados");
+                    }
+                    else {
+                        alert(resp.d);
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+        
+        
 
     </script>
 </body>
