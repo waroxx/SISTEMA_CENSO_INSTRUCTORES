@@ -29,7 +29,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
 
         public static string MOSTRAR_DATOS= @"<div class='row'><br /></div>
       <div class='row'>
-        <span
+        <span id='ced-general'
           >Cédula: <b>{{ cedula }}</b></span
         >
       </div>

@@ -25,7 +25,26 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         }
 
         [WebMethod]
-        public static string datosBuscarDatosGenerales()
+        public static string BuscarDatosGenerales(string cedula)
+        {
+            WebForm2 f = new WebForm2();
+
+            if (f.session_user() == null)
+            {
+                return "ERROR";
+            }
+            string res = "";
+            DBConnections dbc = new DBConnections();
+                var datos = dbc.getDatosGeneralesCenso(cedula); //TODO buscar de sigrhu
+                res = HtmlPaterns.MOSTRAR_DATOS;
+                res = res.Replace("{{ cedula }}", datos.CED);
+                res = res.Replace("{{ nombres }}", datos.NOMBRES);
+                res = res.Replace("{{ apellidos }}", datos.APELLIDOS);      
+            return res;
+        }
+
+        [WebMethod]
+        public static string geCedula()
         {
             WebForm2 f = new WebForm2();
 
@@ -38,7 +57,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             string rol = dbc.getCedFromUser(f.session_user());
             if (rol == "ADMIN")
             {
-                res = HtmlPaterns.BUSCADOR_CEDULA;
+                res = "ADMIN";
             }
             else if (rol == "")
             {
@@ -50,11 +69,8 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             }
             else
             {
-                var datos = dbc.getDatosGeneralesCenso(rol);
-                res = HtmlPaterns.MOSTRAR_DATOS;
-                res = res.Replace("{{ cedula }}", datos.CED);
-                res = res.Replace("{{ nombres }}", datos.NOMBRES);
-                res = res.Replace("{{ apellidos }}", datos.APELLIDOS);
+
+                res = rol;
             }
             return res;
         }
