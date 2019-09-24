@@ -83,10 +83,11 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             {
                 return "ERROR";
             }
-            var Exp = JObject.Parse(experiencias).ToObject<List<T_EXPERIENCIA_INSTRUCTORES>>();
+            var e = JArray.Parse(experiencias);
+            var Exp = JArray.Parse(experiencias).ToObject<List<T_EXPERIENCIA_INSTRUCTORES>>();
             DBConnections dbc = new DBConnections();
-            dbc.postExpInstructores(Exp, dbc.getCedFromUser(f.session_user()), f.session_user());
-            return "true";
+            var r = dbc.postExpInstructores(Exp, dbc.getCedFromUser(f.session_user()), f.session_user());
+            return r.ToString();
         }
 
         [WebMethod]

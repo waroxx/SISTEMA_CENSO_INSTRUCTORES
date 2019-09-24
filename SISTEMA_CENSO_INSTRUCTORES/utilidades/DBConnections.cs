@@ -1,4 +1,5 @@
-﻿using SISTEMA_CENSO_INSTRUCTORES.Models;
+﻿using Newtonsoft.Json.Linq;
+using SISTEMA_CENSO_INSTRUCTORES.Models;
 using System;
 using System.Collections.Generic;
 using System.Diagnostics;
@@ -26,6 +27,28 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                         return "";
                     }
                     return u.CED;
+                }
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return null;
+            }
+
+        }
+
+        public T_DATOS_PARA_CENSO2020 getUserFromUsername(string usuario)
+        {
+            try
+            {
+                using (var ctx = new Contexto())
+                {
+                    var u = ctx.T_DATOS_PARA_CENSO2020.Where(d => d.USUARIO_REGISTRO == (usuario.ToUpper())).FirstOrDefault();
+                    if (u == null)
+                    {
+                        return null;
+                    }
+                    return u;
                 }
             }
             catch (Exception e)
@@ -78,13 +101,14 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
             }
         }
 
-        public bool postExpInstructores(List<T_EXPERIENCIA_INSTRUCTORES> experiencias, string CEDULA, string usuario)
+        public bool postExpInstructores(List<T_EXPERIENCIA_INSTRUCTORES> experiencias, string CED, string usuario)
         {
             try { 
             using (var ctx = new Contexto())
             {
-                    var Exp = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == experiencias[0].CED && e.INDICE == experiencias[0].INDICE).FirstOrDefault();
-                    var deletes = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == Exp.CED);
+                   // var Exp = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == experiencias.First().CED && e.INDICE == experiencias.First().INDICE).FirstOrDefault();
+                    var deletes = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == CED);
+                    JObject ceds = parseCedula(CED);
                     if(experiencias.Count == deletes.ToList().Count)
                     {
                         foreach (var exp in experiencias)
@@ -101,9 +125,14 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                         }
                     }else
                     {
+
                         ctx.T_EXPERIENCIA_INSTRUCTORES.RemoveRange(deletes);
                         foreach (var exp in experiencias)
                         {
+                            exp.CED = ceds["CED"].ToString();
+                            exp.CEDPROINI = ceds["prov"].ToString();
+                            exp.CEDTOM = ceds["tom"].ToString();
+                            exp.CEDASI = ceds["asi"].ToString();
                             ctx.T_EXPERIENCIA_INSTRUCTORES.Add(exp);
                         }
 
@@ -115,6 +144,16 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                 return false;
             }
             return true;
+        }
+
+        public JObject parseCedula(string ced)
+        {
+            JObject jo = new JObject();
+            jo["ced"] = ced;
+            jo["prov"] = ced.Substring(0, ced.IndexOf("-"));
+            jo["tom"] = ced.Substring(ced.IndexOf("-")+1, ced.LastIndexOf("-"));
+            jo["ini"] = ced.Substring(ced.LastIndexOf("-")+1,ced.Length);
+            return jo;
         }
     }
 }
