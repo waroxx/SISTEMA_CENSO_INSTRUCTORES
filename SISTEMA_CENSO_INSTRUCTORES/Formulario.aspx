@@ -48,9 +48,32 @@
 <div class="panel-body">
 	<br /><br />
     <div class="row">
-    <div id="datos-generales" class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4;padding-left:50px;padding-right:50px;">
-        <span>Cargando...</span>
-    </div></div>	
+    <div id="buscador-cedula" class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4;padding-left:50px;padding-right:50px;">
+        <div class='row'><br /></div>
+      <div class='row'>
+        <div class='input-group mb-2'>
+          <div class='input-group-prepend'>
+            <div class='input-group-text'>Cédula</div>
+          </div>
+          <input
+            type='text'
+            class='form-control'
+            id='inlineFormInputGroup'
+            placeholder='8-888-8888'
+          />
+        </div>
+      </div>
+        <br />
+      <div class='row'>
+        <a class='btn' style='background-color:#E5007F;color:#FFFFFF' id='btn-buscar-cedula' onclick="getDatosGenerales()">Buscar</a>
+      </div>
+      <div class='row'><br /></div>
+      <div class='row' id='buscar-response'></div>
+    </div>
+        <div id="datos-generales" class="col-md-4" style="padding-left:50px;padding-right:50px;">
+        ...
+    </div>
+    </div>	
     <br /><br /><br /><br />
     <div class="row" >
         <div class="col-md-3" style="text-align:center">
@@ -126,7 +149,8 @@
     <script>
         
         $(document).ready(function () {
-            getDatosGenerales()
+            //getDatosGenerales()
+            getCedulaRecomendada();
             prepararSeltipo()
             prepararEliminar()
       
@@ -223,12 +247,29 @@
 
 
         function getDatosGenerales() {
+            let c = $("#inlineFormInputGroup").val();
             $.ajax({
                 type: "POST",
-                url: "Formulario.aspx/datosBuscarDatosGenerales",
+                url: "Formulario.aspx/BuscarDatosGenerales",
                 contentType: "application/JSON",
+                data:"{'cedula':'"+c+"'}",
                 success: function (resp) {
                     $("#datos-generales").html(resp.d);
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function getCedulaRecomendada() {
+
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/getCedula",
+                contentType: "application/JSON",
+                success: function (resp) {
+                    $("#inlineFormInputGroup").val(resp.d);
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);
