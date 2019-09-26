@@ -26,16 +26,20 @@
 <div class="container-fluid">
 
 <div class="card border-primary col-md-10 offset-1"  style="margin-top:20px">
-<div class="card-header text-light bg-primary"><h2 class="card-title" style="text-align:center; font-weight:bold; font-size:20px">Formulario de Inscripción para Instructores</h2></div>
-<br /><div class="row">
+<div class="card-header text-light bg-primary d-flex"><div class="col-md-10 m-auto "><h2 class="card-title" style="text-align:left; font-weight:bold; font-size:25px">Registro de facilitadores con experiencia del INEC</h2></div>
+<div class="col-md-2" style="text-align:right;"><a class="btn btn-light btn-sm" href="javascript:CerrarSession();" id="salir"   >
+                <b style="font-size:18px;">Salir</b>&nbsp;&nbsp;<i class="fa fa-share" aria-hidden="true" style="font-size:24px; "></i>
+</a></div>
+</div>
+<%--<div class="row">
 <div class="col-md-10"></div>
  <div class="col-md-2" style="text-align:right">
     <a class="btn btn-basic btn-sm" href="javascript:CerrarSession();" id="salir" style="background-color:#e5007f" >
                 <b style="font-size:18px; color:white;">Salir</b>&nbsp;&nbsp;<i class="fa fa-share" aria-hidden="true" style="font-size:24px; color:white;"></i>
             </a>
-</div></div>
+</div></div>--%>
 <div class="card-body">
-	<br />
+
     <div class="row">
     <div id="buscador-cedula" class="col-md-4" style="border:solid;border-width:2px;border-radius:5px;border-color:#126bb4;padding-left:50px;padding-right:50px;">
         <div class='row'><br /></div>
@@ -64,6 +68,11 @@
     </div>
     </div>	
     <br />
+    <div id="SiNo" class="row form-group" style="border:solid; border-color:#E5007F;border-width:2px;border-radius:5px">
+        <label class="control-label col-md-11"  style="font-weight:bold;">¿Tiene usted o ha tenido experiencia como facilitador en Censos, encuestas o investigaciones especiales del INEC?</label><br />
+        <label class="radio-inline"><input  type="radio" name="experiencia" id="expSi" value="1" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input  type="radio" id="expNo" name="experiencia" value="1" />&nbsp;No </label>
+    </div>
+    <br /><br />
     <div class="row" >
         <div class="col-md-3" style="text-align:center">
             <label style="font-size:16px; font-weight:bold">Tipo de Actividad</label>
@@ -244,13 +253,12 @@
                 success: function (resp) {
                     let r = resp.d;
                     if (resp.d == "ERROR" || r.includes("su cedula es")) {
-                        $("#experiencias :input, #experiencias a").attr("disabled", true);
-                        $("#experiencias a").css("display", "none");
-                        $("#exp-botones").css("display", "none");
+                        blockFields();
                     } else {
                         $("#experiencias :input, #experiencias a").attr("disabled", false);
                         $("#experiencias a").css("display", "block");
-                        $("#exp-botones").css("display", "block");
+                       // $("#exp-botones").css("display", "block");
+                        habilitar();
                     }
                     $("#datos-generales").html(resp.d);
                     getExp();
@@ -440,9 +448,28 @@
         }
 
         function blockFields() {
+            $("#SiNo :input").attr("disabled", true);
             $("#experiencias :input, #experiencias a").attr("disabled", true);
             $("#experiencias a").css("display", "none");
-            $("#exp-botones").css("display", "none");
+            $("#agregar").css("display", "none");
+            $("#enviar").css("display", "none");
+        }
+
+
+        function habilitar() {
+            //blockFields();
+            $("#SiNo :input").prop("disabled", false);
+            //if()
+            alert($("#expSi").attr('checked'))
+            if ($("#expSi").attr('checked')) {
+                $("#experiencias :input, #experiencias a").attr("disabled", false);
+                $("#experiencias a").css("display", "block");
+                $("#agregar").css("display", "block");
+                $("#enviar").css("display", "block");
+            }
+
+
+
         }
       
         
