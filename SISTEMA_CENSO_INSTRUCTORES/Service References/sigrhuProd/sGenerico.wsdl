@@ -1,0 +1,173 @@
+<?xml version="1.0" encoding="utf-8"?>
+<wsdl:definitions xmlns:wsap="http://schemas.xmlsoap.org/ws/2004/08/addressing/policy" xmlns:wsa10="http://www.w3.org/2005/08/addressing" xmlns:tns="http://tempuri.org/" xmlns:msc="http://schemas.microsoft.com/ws/2005/12/wsdl/contract" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsx="http://schemas.xmlsoap.org/ws/2004/09/mex" xmlns:wsp="http://schemas.xmlsoap.org/ws/2004/09/policy" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:soap12="http://schemas.xmlsoap.org/wsdl/soap12/" xmlns:wsu="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:xsd="http://www.w3.org/2001/XMLSchema" name="sGenerico" targetNamespace="http://tempuri.org/" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/">
+  <wsdl:types>
+    <xsd:schema targetNamespace="http://tempuri.org/Imports">
+      <xsd:import schemaLocation="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd0" namespace="http://tempuri.org/" />
+      <xsd:import schemaLocation="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd1" namespace="http://schemas.microsoft.com/2003/10/Serialization/" />
+      <xsd:import schemaLocation="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd2" namespace="http://schemas.microsoft.com/2003/10/Serialization/Arrays" />
+      <xsd:import schemaLocation="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd3" namespace="http://schemas.datacontract.org/2004/07/System.Data" />
+    </xsd:schema>
+  </wsdl:types>
+  <wsdl:message name="IsGenerico_DoWork_InputMessage">
+    <wsdl:part name="parameters" element="tns:DoWork" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_DoWork_OutputMessage">
+    <wsdl:part name="parameters" element="tns:DoWorkResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_EjecutarProcedimiento_InputMessage">
+    <wsdl:part name="parameters" element="tns:EjecutarProcedimiento" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_EjecutarProcedimiento_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EjecutarProcedimientoResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoSinArg_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoSinArg" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoSinArg_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoSinArgResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgEntero_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgEntero" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgEntero_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgEnteroResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgCadena_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgCadena" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgCadena_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgCadenaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgFecha_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgFecha" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgFecha_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgFechaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgArregloCadena_InputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgArregloCadena" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_ListarGenericoArgArregloCadena_OutputMessage">
+    <wsdl:part name="parameters" element="tns:ListarGenericoArgArregloCadenaResponse" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_EjecutarProcedimientoArgArregloCadend_InputMessage">
+    <wsdl:part name="parameters" element="tns:EjecutarProcedimientoArgArregloCadend" />
+  </wsdl:message>
+  <wsdl:message name="IsGenerico_EjecutarProcedimientoArgArregloCadend_OutputMessage">
+    <wsdl:part name="parameters" element="tns:EjecutarProcedimientoArgArregloCadendResponse" />
+  </wsdl:message>
+  <wsdl:portType name="IsGenerico">
+    <wsdl:operation name="DoWork">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/DoWork" message="tns:IsGenerico_DoWork_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/DoWorkResponse" message="tns:IsGenerico_DoWork_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EjecutarProcedimiento">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/EjecutarProcedimiento" message="tns:IsGenerico_EjecutarProcedimiento_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/EjecutarProcedimientoResponse" message="tns:IsGenerico_EjecutarProcedimiento_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoSinArg">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoSinArg" message="tns:IsGenerico_ListarGenericoSinArg_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoSinArgResponse" message="tns:IsGenerico_ListarGenericoSinArg_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgEntero">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgEntero" message="tns:IsGenerico_ListarGenericoArgEntero_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgEnteroResponse" message="tns:IsGenerico_ListarGenericoArgEntero_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgCadena">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgCadena" message="tns:IsGenerico_ListarGenericoArgCadena_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgCadenaResponse" message="tns:IsGenerico_ListarGenericoArgCadena_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgFecha">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgFecha" message="tns:IsGenerico_ListarGenericoArgFecha_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgFechaResponse" message="tns:IsGenerico_ListarGenericoArgFecha_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgArregloCadena">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgArregloCadena" message="tns:IsGenerico_ListarGenericoArgArregloCadena_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/ListarGenericoArgArregloCadenaResponse" message="tns:IsGenerico_ListarGenericoArgArregloCadena_OutputMessage" />
+    </wsdl:operation>
+    <wsdl:operation name="EjecutarProcedimientoArgArregloCadend">
+      <wsdl:input wsaw:Action="http://tempuri.org/IsGenerico/EjecutarProcedimientoArgArregloCadend" message="tns:IsGenerico_EjecutarProcedimientoArgArregloCadend_InputMessage" />
+      <wsdl:output wsaw:Action="http://tempuri.org/IsGenerico/EjecutarProcedimientoArgArregloCadendResponse" message="tns:IsGenerico_EjecutarProcedimientoArgArregloCadend_OutputMessage" />
+    </wsdl:operation>
+  </wsdl:portType>
+  <wsdl:binding name="BasicHttpBinding_IsGenerico" type="tns:IsGenerico">
+    <soap:binding transport="http://schemas.xmlsoap.org/soap/http" />
+    <wsdl:operation name="DoWork">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/DoWork" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EjecutarProcedimiento">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/EjecutarProcedimiento" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoSinArg">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/ListarGenericoSinArg" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgEntero">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/ListarGenericoArgEntero" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgCadena">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/ListarGenericoArgCadena" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgFecha">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/ListarGenericoArgFecha" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="ListarGenericoArgArregloCadena">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/ListarGenericoArgArregloCadena" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+    <wsdl:operation name="EjecutarProcedimientoArgArregloCadend">
+      <soap:operation soapAction="http://tempuri.org/IsGenerico/EjecutarProcedimientoArgArregloCadend" style="document" />
+      <wsdl:input>
+        <soap:body use="literal" />
+      </wsdl:input>
+      <wsdl:output>
+        <soap:body use="literal" />
+      </wsdl:output>
+    </wsdl:operation>
+  </wsdl:binding>
+  <wsdl:service name="sGenerico">
+    <wsdl:port name="BasicHttpBinding_IsGenerico" binding="tns:BasicHttpBinding_IsGenerico">
+      <soap:address location="http://172.24.8.11/wcfGenerico/sGenerico.svc" />
+    </wsdl:port>
+  </wsdl:service>
+</wsdl:definitions>

@@ -1,8 +1,10 @@
 ﻿using Newtonsoft.Json.Linq;
 using SISTEMA_CENSO_INSTRUCTORES.Models;
+using SISTEMA_CENSO_INSTRUCTORES.sigrhuProd;
 using SISTEMA_CENSO_INSTRUCTORES.utilidades;
 using System;
 using System.Collections.Generic;
+using System.Data;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -34,9 +36,19 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                 return "ERROR";
             }
             string res = "";
+            if (f.session_rol()!="ADMIN"&&
+                f.session_rol()!="CENSO"&&
+                f.session_rol()!=cedula)
+            {
+                return "su cedula es " + f.session_rol();
+            }
             DBConnections dbc = new DBConnections();
-                var datos = dbc.getDatosGeneralesCenso(cedula); //TODO buscar de sigrhu
-                res = HtmlPaterns.MOSTRAR_DATOS;
+            var datos = dbc.getDatosGeneralesCenso(cedula); //TODO buscar de sigrhu
+            if (datos == null)
+            {
+                return "ERROR";
+            }
+            res = HtmlPaterns.MOSTRAR_DATOS;
                 res = res.Replace("{{ cedula }}", datos.CED);
                 res = res.Replace("{{ nombres }}", datos.NOMBRES);
                 res = res.Replace("{{ apellidos }}", datos.APELLIDOS);      
@@ -44,7 +56,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         }
 
         [WebMethod]
-        public static string geCedula()
+        public static string getCedula()
         {
             WebForm2 f = new WebForm2();
 
@@ -54,29 +66,62 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             }
             string res = "";
             DBConnections dbc = new DBConnections();
-            string rol = dbc.getCedFromUser(f.session_user());
-            if (rol == "ADMIN")
+            JObject rol = dbc.getCedFromUser(f.session_user());
+            if (rol == null)
             {
-                res = "ADMIN";
+                return "ERROR";
             }
-            else if (rol == "")
+            else if (rol["SRC"].ToString() == "ADMIN")
             {
-                res = "";
+                f.rol_session(rol["SRC"].ToString());
+                res = rol["CED"].ToString();
             }
-            else if (rol == null)
+            else if (rol["SRC"].ToString() == "DB")
             {
-                res = "ERROR";
+                f.rol_session(rol["CED"].ToString());
+                res = rol["CED"].ToString();
             }
-            else
+            else if (rol["SRC"].ToString() == "CENSO")
             {
-
-                res = rol;
+                f.rol_session(rol["SRC"].ToString());
+                res = rol["CED"].ToString();
             }
             return res;
         }
 
         [WebMethod]
-        public static string getExperiencias()
+        public static string getExperiencias(string cedula)
+        {
+            WebForm2 f = new WebForm2();
+            if (f.session_user() == null)
+            {
+                return "ERROR";
+            }
+            var fs = f.session_rol();
+            if (fs=="CENSO")
+            {
+                return "WARNING: aún no ha guardado datos";
+            }
+            if (fs == cedula || fs == "ADMIN")
+            {
+            DBConnections dbc = new DBConnections();
+            var Exp = dbc.getExpIntructores(cedula);
+            return ExpFormatter(Exp);
+            //JObject jo = JObject.FromObject(Exp);
+            //return jo.ToString();
+            }
+            if (fs != cedula)
+            {
+                return "Solo puede guardar en su propia cédula " + f.session_rol();
+            }
+            else
+            {
+                return "ERROR";
+            }
+        }
+
+        [WebMethod]
+        public static string postExperiencias(string experiencias, string cedula)
         {
             WebForm2 f = new WebForm2();
 
@@ -84,25 +129,14 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             {
                 return "ERROR";
             }
-            DBConnections dbc = new DBConnections();
-            var Exp = dbc.getExpIntructores(dbc.getCedFromUser(f.session_user()));
-            JObject jo = JObject.FromObject(Exp);
-            return jo.ToString();
-        }
-
-        [WebMethod]
-        public static string postExperiencias(string experiencias)
-        {
-            WebForm2 f = new WebForm2();
-
-            if (f.session_user() == null)
+            if (f.session_rol()!="ADMIN" && f.session_rol() != "CENSO" && f.session_rol()!=cedula )
             {
-                return "ERROR";
+                return "Solo puede guardar en su propia cédula " + f.session_rol();
             }
             var e = JArray.Parse(experiencias);
             var Exp = JArray.Parse(experiencias).ToObject<List<T_EXPERIENCIA_INSTRUCTORES>>();
             DBConnections dbc = new DBConnections();
-            var r = dbc.postExpInstructores(Exp, dbc.getCedFromUser(f.session_user()), f.session_user());
+            var r = dbc.postExpInstructores(Exp, cedula, f.session_user());
             return r.ToString();
         }
 
@@ -123,13 +157,57 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             var nom = Session["USUARIO"];
             bool ret = false;
             Session["USUARIO"] = null;
+            Session["ROL"] = null;
+            Session.Abandon();
             ret = true;
             return ret;
         }
 
+        protected bool rol_session(string rol)
+        {
+            bool ret = false;
+            Session["ROL"] = rol;
+            ret = true;
+            return ret;
+        }
+
+
         private string session_user()
         {
             return (string)Session["USUARIO"];
+        }
+
+        private string session_rol()
+        {
+            return (string)Session["ROL"];
+        }
+
+        public static string ExpFormatter(List<T_EXPERIENCIA_INSTRUCTORES> exList)
+        {
+            string output = "";
+            foreach (var item in exList)
+            {
+                var campos = HtmlPaterns.campos;
+                campos = campos.Replace("{{tp}}value='" + item.TIPO_ACTIVIDAD + "'", "value='" + item.TIPO_ACTIVIDAD + "' selected");
+                
+                if (item.TIPO_ACTIVIDAD_ESP!="" && item.TIPO_ACTIVIDAD_ESP != null)
+                {
+                    campos = campos.Replace("{{DISPLAY}}", "display:block");
+                    campos = campos.Replace("{{OTIPO}}", item.TIPO_ACTIVIDAD_ESP);
+                }
+                else
+                {
+                    campos = campos.Replace("{{DISPLAY}}", "display:none");
+                    campos = campos.Replace("{{OTIPO}}", item.TIPO_ACTIVIDAD_ESP);
+                }
+                campos = campos.Replace("{{tm}}value='" + item.TEMA + "'", "value='" + item.TEMA + "' selected");
+                campos = campos.Replace("{{DESC}}", item.DESCRIPCION);
+                campos = campos.Replace("{{YEAR}}", item.YEAR);
+                campos = campos.Replace("{{tm}}", "");
+                campos = campos.Replace("{{tp}}", "");
+                output += campos;
+            }
+            return output;
         }
     }
 }

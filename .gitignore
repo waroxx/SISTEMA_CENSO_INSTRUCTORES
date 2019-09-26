@@ -3,3 +3,6 @@
 ################################################################################
 
 *.suo
+/SISTEMA_CENSO_INSTRUCTORES/bin
+/SISTEMA_CENSO_INSTRUCTORES/obj/Debug
+/.vs/config

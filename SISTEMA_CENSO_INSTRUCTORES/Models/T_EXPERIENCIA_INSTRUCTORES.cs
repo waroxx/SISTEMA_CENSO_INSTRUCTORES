@@ -47,6 +47,8 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
 
         public DateTime? FECHA_REGISTRO { get; set; }
 
+        [Key]
+        [Column(Order = 2)]
         [StringLength(40)]
         public string REGISTRADO_POR { get; set; }
 

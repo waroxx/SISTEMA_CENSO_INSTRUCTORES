@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ReferenceGroup xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:xsd="http://www.w3.org/2001/XMLSchema" ID="d26c1fb5-b763-40e4-be0b-ec0de659c6ec" xmlns="urn:schemas-microsoft-com:xml-wcfservicemap">
+  <ClientOptions>
+    <GenerateAsynchronousMethods>false</GenerateAsynchronousMethods>
+    <GenerateTaskBasedAsynchronousMethod>true</GenerateTaskBasedAsynchronousMethod>
+    <EnableDataBinding>true</EnableDataBinding>
+    <ExcludedTypes />
+    <ImportXmlTypes>false</ImportXmlTypes>
+    <GenerateInternalTypes>false</GenerateInternalTypes>
+    <GenerateMessageContracts>false</GenerateMessageContracts>
+    <NamespaceMappings />
+    <CollectionMappings />
+    <GenerateSerializableTypes>true</GenerateSerializableTypes>
+    <Serializer>Auto</Serializer>
+    <UseSerializerForFaults>true</UseSerializerForFaults>
+    <ReferenceAllAssemblies>true</ReferenceAllAssemblies>
+    <ReferencedAssemblies />
+    <ReferencedDataContractTypes />
+    <ServiceContractMappings />
+  </ClientOptions>
+  <MetadataSources>
+    <MetadataSource Address="http://172.24.8.11/wcfGenerico/sGenerico.svc" Protocol="http" SourceId="1" />
+  </MetadataSources>
+  <Metadata>
+    <MetadataFile FileName="sGenerico.xsd" MetadataType="Schema" ID="8f666400-dc72-423b-889d-0db6d698bbb8" SourceId="1" SourceUrl="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd3" />
+    <MetadataFile FileName="sGenerico1.xsd" MetadataType="Schema" ID="28b274f1-493b-4873-aa73-d85fe2f49b2e" SourceId="1" SourceUrl="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd1" />
+    <MetadataFile FileName="sGenerico2.xsd" MetadataType="Schema" ID="ea6f43eb-b689-4afa-96e5-ecb5f8584383" SourceId="1" SourceUrl="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd0" />
+    <MetadataFile FileName="sGenerico.wsdl" MetadataType="Wsdl" ID="98cda768-827d-4d79-8dc9-89f658216779" SourceId="1" SourceUrl="http://172.24.8.11/wcfGenerico/sGenerico.svc?wsdl" />
+    <MetadataFile FileName="sGenerico3.xsd" MetadataType="Schema" ID="da7f00c1-6711-4f66-8d14-7d8d2de8f43d" SourceId="1" SourceUrl="http://172.24.8.11/wcfGenerico/sGenerico.svc?xsd=xsd2" />
+    <MetadataFile FileName="sGenerico.disco" MetadataType="Disco" ID="db8bf752-d966-4015-9b8a-fa70afe43389" SourceId="1" SourceUrl="http://172.24.8.11/wcfGenerico/sGenerico.svc?disco" />
+  </Metadata>
+  <Extensions>
+    <ExtensionFile FileName="configuration91.svcinfo" Name="configuration91.svcinfo" />
+    <ExtensionFile FileName="configuration.svcinfo" Name="configuration.svcinfo" />
+  </Extensions>
+</ReferenceGroup>

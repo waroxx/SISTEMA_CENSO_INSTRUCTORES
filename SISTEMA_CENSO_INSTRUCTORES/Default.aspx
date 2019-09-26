@@ -63,7 +63,7 @@
 		 		<div class="input-group input-group-lg">
 				  <%--<label class="form-control col-md-3 col-lg-3" id="" >CGR\</label>--%>
                      <span class="input-group-addon" id="sizing-addon1">CGR</span>
-				  <input type="text" class="form-control col-lg-9" name="Usuario" data-toggle="login" data-placement="right" title="EJ: MQUINTERO" data-position placeholder="Usuario de red" id="usuario" aria-describedby="sizing-addon1" required>
+				  <input type="text" class="form-control col-lg-9" name="Usuario" data-toggle="login" data-placement="right" title="EJ: BBRITTON" data-position placeholder="Usuario de red" id="usuario" aria-describedby="sizing-addon1" required>
 				</div>
 				<br/>
 				<div class="input-group input-group-lg">
@@ -84,22 +84,22 @@
 </div>
     <script>
        $(document).ready(function () {
-           $.ajax({
-               type: "POST",
-               url: "Default.aspx/currentUser",
-               contentType: "application/JSON",
-               success: function (resp) {
-                   if (resp.d.indexOf("CGR\\") == -1) {
-                       $("#usuario").attr("data-original-title", "Ejemplo:  EBECKFORD");
-                       console.log(resp.d);
-                   } else {
-                       $("#usuario").attr("data-original-title", "Ejemplo:  " + resp.d.replace("CGR\\", ""));
-                   }
-               },
-               error: function (xhr, status, error) {
-                   alert(xhr.responseText);
-               }
-           });
+           //$.ajax({
+           //    type: "POST",
+           //    url: "Default.aspx/currentUser",
+           //    contentType: "application/JSON",
+           //    success: function (resp) {
+           //        if (resp.d.indexOf("CGR\\") == -1) {
+           //            $("#usuario").attr("data-original-title", "Ejemplo:  EBECKFORD");
+           //            console.log(resp.d);
+           //        } else {
+           //            $("#usuario").attr("data-original-title", "Ejemplo:  " + resp.d.replace("CGR\\", ""));
+           //        }
+           //    },
+           //    error: function (xhr, status, error) {
+           //        alert(xhr.responseText);
+           //    }
+           //});
            $('[data-toggle="login"]').tooltip();
            $("#usuario, #password").keypress(function (e) {
                var k = e.keyCode || e.which;

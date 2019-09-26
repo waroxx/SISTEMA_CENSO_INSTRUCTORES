@@ -60,6 +60,7 @@
             class='form-control'
             id='inlineFormInputGroup'
             placeholder='8-888-8888'
+            oninput='blockFields()'
           />
         </div>
       </div>
@@ -104,10 +105,10 @@
             <div class="form-group otrotipo" id="otrotipo" style="display:none;"><input type="text" class="form-control otrotipo" style=" width:220px; margin-left:35px"/></div>
         </div>
          <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control descripcion" id="desc"/>
+            <input type="text" class="form-control" id="desc"/>
         </div>
          <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker seltema">
+           <select class="selectpicker">
                 <option selected="selected" value="0">Seleccione</option>
                <option value="1">Metodología</option>
                <option value="2">Cartografía</option>
@@ -117,7 +118,7 @@
             </select>
         </div>
          <div class="col-md-2" style="text-align:center">
-            <input type="text" class="form-control year" id="year"/>
+            <input type="text" class="form-control" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
         </div>
          <div class="col-md-1" style="text-align:center">
              <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete" >
@@ -129,7 +130,7 @@
     
 </div>
     	<br />
-    <div class="row">
+    <div class="row" id="exp-botones">
         <div class="col-md-1"></div>
         <div class="col-md-2" >
         <a class="btn btn-success" href="javascript:void(0);" id="agregar" >
@@ -181,7 +182,7 @@
             </select>
         </div>
          <div class="col-md-2" style="text-align:center">
-            <input type="text" class="form-control year" id="year"/>
+            <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
         </div>
          <div class="col-md-1" style="text-align:center">
              <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
@@ -195,6 +196,7 @@
                 prepararEliminar();
                 revisarHijos();
             });
+            blockFields();
         });
 
 
@@ -217,8 +219,6 @@
 
             });
         }
-
-
 
         function prepararEliminar() {
             let btnEliminar = $(".eliminar");
@@ -245,7 +245,6 @@
 
         }
 
-
         function getDatosGenerales() {
             let c = $("#inlineFormInputGroup").val();
             $.ajax({
@@ -254,7 +253,18 @@
                 contentType: "application/JSON",
                 data:"{'cedula':'"+c+"'}",
                 success: function (resp) {
+                    let r = resp.d;
+                    if (resp.d == "ERROR" || r.includes("su cedula es")) {
+                        $("#experiencias :input, #experiencias a").attr("disabled", true);
+                        $("#experiencias a").css("display", "none");
+                        $("#exp-botones").css("display", "none");
+                    } else {
+                        $("#experiencias :input, #experiencias a").attr("disabled", false);
+                        $("#experiencias a").css("display", "block");
+                        $("#exp-botones").css("display", "block");
+                    }
                     $("#datos-generales").html(resp.d);
+                    getExp();
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);
@@ -269,6 +279,15 @@
                 url: "Formulario.aspx/getCedula",
                 contentType: "application/JSON",
                 success: function (resp) {
+                    //if (resp.d === "ERROR") {
+                    //    $("#experiencias :input, #experiencias a").attr("disabled", true);
+                    //    $("#experiencias a").css("display", "none");
+                    //    $("#exp-botones").css("display", "none");
+                    //} else {
+                    //    $("#experiencias :input, #experiencias a").attr("disabled", false);
+                    //    $("#experiencias a").css("display", "block");
+                    //    $("#exp-botones").css("display", "block");
+                    //}
                     $("#inlineFormInputGroup").val(resp.d);
                 },
                 error: function (xhr, status, error) {
@@ -276,6 +295,7 @@
                 }
             });
         }
+
         function CerrarSession() {
             $.ajax({
                 type: "POST",
@@ -295,7 +315,7 @@
         function LeerHijos() {
             let hijos = $("#experiencias").children();
             let arrhijo = [];
-            hijos.each(function (key,el) {
+            hijos.each(function (key, el) {
                 let stipo = $(el).find(".selectpicker.seltipo");
                 let otipo = $(el).find(".form-control.otrotipo");
                 let desc=$(el).find(".descripcion")
@@ -317,11 +337,12 @@
 
         function Enviar() {
             let d = JSON.stringify(LeerHijos());
+            let ced = $("#ced-general").html();
             $.ajax({
                 type: "POST",
                 url: "Formulario.aspx/postExperiencias",
                 contentType: "application/JSON",
-                data:"{'experiencias':'"+d+"'}",
+                data:"{'experiencias':'"+d+"', 'cedula':'"+ced+"'}",
                 success: function (resp) {
                     if (resp.d === "True") {
                         alert("Datos Guadados con Éxito");
@@ -338,7 +359,103 @@
                 }
             });
         }
-        
+
+        function getExp() {
+            let ced = $("#ced-general").html();
+            $.ajax({
+                type: "POST",
+                url: "Formulario.aspx/getExperiencias",
+                contentType: "application/JSON",
+                data: "{'cedula':'" + ced + "'}",
+                success: function (resp) {
+                    if (resp.d === "ERROR") {
+                        Console.log(resp.d);
+                        resetCampos();
+                    }
+                    else if (resp.d.includes("WARNING")) {
+                        console.log(resp.d);
+                        resetCampos();
+                    }else if(resp.d==""){
+                        resetCampos();
+                    $(".selectpicker").selectpicker();
+                    prepararSeltipo();
+                    prepararEliminar();
+                    revisarHijos();
+                    }
+                    else {
+                        //alert(resp.d);
+                        $('#experiencias').html(resp.d);
+                        $(".selectpicker").selectpicker();
+                        $(".selectpicker").selectpicker('refresh');
+                        prepararSeltipo();
+                        prepararEliminar();
+                        revisarHijos();
+                    }
+                },
+                error: function (xhr, status, error) {
+                    alert(xhr.responseText);
+                }
+            });
+        }
+
+        function resetCampos() {
+            $('#experiencias').html(` <div class="row" >
+        <div class=" form-group col-md-3" style="text-align:center" >
+            <select class="selectpicker seltipo" id="seltipo">
+                <option selected="selected">Seleccione</option>
+               <option value="1">Censo</option>
+               <option value="2">Encuesta</option>
+               <option value="3">Investigación Especial</option>
+               <option value="4">Otros(Especifique)</option>
+            </select>
+            <br /><br />
+            <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
+        </div>
+         <div class="col-md-3" style="text-align:center">
+            <input type="text" class="form-control descripcion" id="desc"/>
+        </div>
+         <div class="col-md-3" style="text-align:center">
+           <select class="selectpicker seltema">
+                <option selected="selected " value="0">Seleccione</option>
+               <option value="1">Metodología</option>
+               <option value="2">Cartografía</option>
+               <option value="3">Administrativo y Presupuesto</option>
+               <option value="4">Tecnología</option>
+
+            </select>
+        </div>
+         <div class="col-md-2" style="text-align:center">
+            <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
+        </div>
+         <div class="col-md-1" style="text-align:center">
+             <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
+                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
+            </a>
+        </div>
+          <div class ="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
+    </div>`);
+            $(".selectpicker").selectpicker();
+        }
+
+
+        function Numeros(string, sender) {//Solo numeros
+            var out = '';
+            var filtro = '1234567890';//Caracteres validos
+
+            //Recorrer el texto y verificar si el caracter se encuentra en la lista de validos 
+            for (var i = 0; i < string.length; i++)
+                if (filtro.indexOf(string.charAt(i)) != -1)
+                    //Se añaden a la salida los caracteres validos
+                    out += string.charAt(i);
+            return out;
+        }
+
+        function blockFields() {
+            $("#experiencias :input, #experiencias a").attr("disabled", true);
+            $("#experiencias a").css("display", "none");
+            $("#exp-botones").css("display", "none");
+        }
+      
         
 
     </script>
