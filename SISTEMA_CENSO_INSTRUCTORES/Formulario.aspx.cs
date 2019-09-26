@@ -69,7 +69,8 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             JObject rol = dbc.getCedFromUser(f.session_user());
             if (rol == null)
             {
-                return "ERROR";
+                f.rol_session("CENSO");
+                return "";
             }
             else if (rol["SRC"].ToString() == "ADMIN")
             {
