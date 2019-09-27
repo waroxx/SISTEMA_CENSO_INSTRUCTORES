@@ -107,7 +107,10 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             {
             DBConnections dbc = new DBConnections();
             var Exp = dbc.getExpIntructores(cedula);
-            return ExpFormatter(Exp);
+            JObject response = new JObject();
+                response["TieneExperiencia"] = Exp.First().TIENE_EXPERIENCIA;
+                response["Exp"]= ExpFormatter(Exp);
+                return response.ToString();
             //JObject jo = JObject.FromObject(Exp);
             //return jo.ToString();
             }

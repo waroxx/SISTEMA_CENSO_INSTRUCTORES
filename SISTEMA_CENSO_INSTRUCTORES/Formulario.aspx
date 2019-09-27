@@ -70,7 +70,7 @@
     <br />
     <div id="SiNo" class="row form-group" style="border:solid; border-color:#E5007F;border-width:2px;border-radius:5px">
         <label class="control-label col-md-11"  style="font-weight:bold;">¿Tiene usted o ha tenido experiencia como facilitador en Censos, encuestas o investigaciones especiales del INEC?</label><br />
-        <label class="radio-inline"><input  type="radio" name="experiencia" id="expSi" value="1" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline"><input  type="radio" id="expNo" name="experiencia" value="1" />&nbsp;No </label>
+        <label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" name="experiencia" id="expSi" value="1" disabled="disabled" style="visibility:hidden" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" id="expNo" name="experiencia" value="1" disabled="disabled" style="visibility:hidden"/>&nbsp;No </label>
     </div>
     <br /><br />
     <div class="row" >
@@ -148,47 +148,12 @@
     <script>
         
         $(document).ready(function () {
-            //getDatosGenerales()
             getCedulaRecomendada();
             prepararSeltipo()
             prepararEliminar()
       
             $("#agregar").click(function () {
-                $('#experiencias').append(` <div class="row" >
-        <div class=" form-group col-md-3" style="text-align:center" >
-            <select class="selectpicker seltipo" id="seltipo">
-                <option selected="selected">Seleccione</option>
-               <option value="1">Censo</option>
-               <option value="2">Encuesta</option>
-               <option value="3">Investigación Especial</option>
-               <option value="4">Otros(Especifique)</option>
-            </select>
-            <br /><br />
-            <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control descripcion" id="desc"/>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker seltema">
-                <option selected="selected " value="0">Seleccione</option>
-               <option value="1">Metodología</option>
-               <option value="2">Cartografía</option>
-               <option value="3">Administrativo y Presupuesto</option>
-               <option value="4">Tecnología</option>
-
-            </select>
-        </div>
-         <div class="col-md-2" style="text-align:center">
-            <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
-        </div>
-         <div class="col-md-1" style="text-align:center">
-             <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
-                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
-            </a>
-        </div>
-          <div class ="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
-    </div>`);
+                $('#experiencias').append('<div class="row" ><div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo"><option selected="selected">Seleccione</option><option value="1">Censo</option><option value="2">Encuesta</option><option value="3">Investigación Especial</option><option value="4">Otros(Especifique)</option> </select> <br /><br /><div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px" /></div></div><div class="col-md-3" style="text-align:center"> <input type="text" class="form-control descripcion" id="desc"/></div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema"><option selected="selected " value="0">Seleccione</option><option value="1">Metodología</option><option value="2">Cartografía</option><option value="3">Administrativo y Presupuesto</option><option value="4">Tecnología</option></select></div><div class="col-md-2" style="text-align:center"> <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/></div><div class="col-md-1" style="text-align:center"> <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class ="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px" /></div></div>');
                 $(".selectpicker").selectpicker();
                 prepararSeltipo();
                 prepararEliminar();
@@ -252,12 +217,9 @@
                 data:"{'cedula':'"+c+"'}",
                 success: function (resp) {
                     let r = resp.d;
-                    if (resp.d == "ERROR" || r.includes("su cedula es")) {
+                    if (resp.d == "ERROR" || r.indexOf("su cedula es")!=-1) {
                         blockFields();
                     } else {
-                        $("#experiencias :input, #experiencias a").attr("disabled", false);
-                        $("#experiencias a").css("display", "block");
-                       // $("#exp-botones").css("display", "block");
                         habilitar();
                     }
                     $("#datos-generales").html(resp.d);
@@ -276,15 +238,6 @@
                 url: "Formulario.aspx/getCedula",
                 contentType: "application/JSON",
                 success: function (resp) {
-                    //if (resp.d === "ERROR") {
-                    //    $("#experiencias :input, #experiencias a").attr("disabled", true);
-                    //    $("#experiencias a").css("display", "none");
-                    //    $("#exp-botones").css("display", "none");
-                    //} else {
-                    //    $("#experiencias :input, #experiencias a").attr("disabled", false);
-                    //    $("#experiencias a").css("display", "block");
-                    //    $("#exp-botones").css("display", "block");
-                    //}
                     $("#inlineFormInputGroup").val(resp.d);
                 },
                 error: function (xhr, status, error) {
@@ -312,14 +265,19 @@
         function LeerHijos() {
             let hijos = $("#experiencias").children();
             let arrhijo = [];
+            let SiNo = $("#expSi").prop('checked') ? true : $("#expNo").prop('checked') ? false : null;
+            if(SiNo==null || SiNo==false){
+                arrhijo.push({TIENE_EXPERIENCIA:SiNo});
+                return arrhijo;
+            }
             hijos.each(function (key, el) {
                 let stipo = $(el).find(".selectpicker.seltipo");
                 let otipo = $(el).find(".form-control.otrotipo");
                 let desc=$(el).find(".descripcion")
                 let stema = $(el).find(".selectpicker.seltema");
-                let year = $(el).find(".year");
-
+                let year = $(el).find(".year");        
                 let obj = {
+                    TIENE_EXPERIENCIA:SiNo,
                     INDICE:key,
                     TIPO_ACTIVIDAD: $(stipo[0]).val(),
                     TIPO_ACTIVIDAD_ESP: $(otipo[0]).val(),
@@ -365,13 +323,16 @@
                 contentType: "application/JSON",
                 data: "{'cedula':'" + ced + "'}",
                 success: function (resp) {
+                    try{
+                        let obj = $.parseJSON(resp.d);
                     if (resp.d === "ERROR") {
                         Console.log(resp.d);
                         resetCampos();
                     }
-                    else if (resp.d.includes("WARNING")) {
+                    else if (resp.d.indexOf("WARNING")!=-1) {
                         console.log(resp.d);
                         resetCampos();
+                        habilitar();
                     }else if(resp.d==""){
                         resetCampos();
                     $(".selectpicker").selectpicker();
@@ -379,14 +340,27 @@
                     prepararEliminar();
                     revisarHijos();
                     }
-                    else {
-                        //alert(resp.d);
-                        $('#experiencias').html(resp.d);
+                    else if (obj.hasOwnProperty("Exp")) {
+                        console.log();
+                        if(obj.TieneExperiencia){
+                            $("#expNo").prop('checked',false);
+                        $("#expSi").prop('checked',true);
+                        }
+                        if(!obj.TieneExperiencia){
+                            $("#expSi").prop('checked',false);
+                            $("#expNo").prop('checked',true);
+                        }
+                        $('#experiencias').html(obj.Exp);
                         $(".selectpicker").selectpicker();
                         $(".selectpicker").selectpicker('refresh');
                         prepararSeltipo();
                         prepararEliminar();
                         revisarHijos();
+                        habilitar(true);
+                    }
+                    }catch(error){
+                        let obj={}
+                        console.log("no object recived");
                     }
                 },
                 error: function (xhr, status, error) {
@@ -396,42 +370,11 @@
         }
 
         function resetCampos() {
-            $('#experiencias').html(` <div class="row" >
-        <div class=" form-group col-md-3" style="text-align:center" >
-            <select class="selectpicker seltipo" id="seltipo">
-                <option selected="selected">Seleccione</option>
-               <option value="1">Censo</option>
-               <option value="2">Encuesta</option>
-               <option value="3">Investigación Especial</option>
-               <option value="4">Otros(Especifique)</option>
-            </select>
-            <br /><br />
-            <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control descripcion" id="desc"/>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker seltema">
-                <option selected="selected " value="0">Seleccione</option>
-               <option value="1">Metodología</option>
-               <option value="2">Cartografía</option>
-               <option value="3">Administrativo y Presupuesto</option>
-               <option value="4">Tecnología</option>
-
-            </select>
-        </div>
-         <div class="col-md-2" style="text-align:center">
-            <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
-        </div>
-         <div class="col-md-1" style="text-align:center">
-             <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
-                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
-            </a>
-        </div>
-          <div class ="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
-    </div>`);
+            $('#experiencias').html('<div class="row" ><div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo"><option selected="selected">Seleccione</option><option value="1">Censo</option><option value="2">Encuesta</option><option value="3">Investigación Especial</option><option value="4">Otros(Especifique)</option> </select> <br /><br /><div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px" /></div></div><div class="col-md-3" style="text-align:center"> <input type="text" class="form-control descripcion" id="desc"/></div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema"><option selected="selected " value="0">Seleccione</option><option value="1">Metodología</option><option value="2">Cartografía</option><option value="3">Administrativo y Presupuesto</option><option value="4">Tecnología</option></select></div><div class="col-md-2" style="text-align:center"> <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/></div><div class="col-md-1" style="text-align:center"> <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class ="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px" /></div></div>');
             $(".selectpicker").selectpicker();
+            $("#expSi").prop('checked',false);
+            $("#expNo").prop('checked', false);
+            habilitar(false);
         }
 
 
@@ -451,29 +394,37 @@
             $("#SiNo :input").attr("disabled", true);
             $("#experiencias :input, #experiencias a").attr("disabled", true);
             $("#experiencias a").css("display", "none");
-            $("#agregar").css("display", "none");
+            $("#agregar").css("visibility", "hidden");
             $("#enviar").css("display", "none");
+            $("#SiNo :input").prop("disabled", true);
+            $("#SiNo :input, #SiNo >.radio-inline").css("visibility", "hidden");
         }
 
 
-        function habilitar() {
-            //blockFields();
+        function habilitar(way=true) {
+            
+            blockFields();
+            if(!way){
+                return;
+            }
+            let dg = $("#datos-generales").text();
+            if(dg=="ERROR"){
+                return;
+            }
             $("#SiNo :input").prop("disabled", false);
+            $("#SiNo :input, #SiNo >.radio-inline").css("visibility", "visible");
             //if()
-            alert($("#expSi").attr('checked'))
-            if ($("#expSi").attr('checked')) {
+            //alert($("#expSi").prop('checked'))
+            if ($("#expSi").prop('checked')) {
                 $("#experiencias :input, #experiencias a").attr("disabled", false);
                 $("#experiencias a").css("display", "block");
-                $("#agregar").css("display", "block");
+                $("#agregar").css("visibility", "visible");
+                $("#enviar").css("display", "block");
+            } else if ($("#expNo").prop('checked')) {
                 $("#enviar").css("display", "block");
             }
-
-
-
+            $(".selectpicker").selectpicker('refresh');
         }
-      
-        
-
     </script>
 </body>
 </html>

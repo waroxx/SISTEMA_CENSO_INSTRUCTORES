@@ -25,6 +25,8 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
         [StringLength(5)]
         public string CEDASI { get; set; }
 
+        public bool? TIENE_EXPERIENCIA { get; set; }
+
         [Key]
         [Column(Order = 1)]
         [DatabaseGenerated(DatabaseGeneratedOption.None)]

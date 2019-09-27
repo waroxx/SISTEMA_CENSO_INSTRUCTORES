@@ -8,7 +8,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
     public partial class Contexto : DbContext
     {
         public Contexto()
-            : base("name=Contexto2")
+            : base("name=Contexto3")
         {
         }
 
