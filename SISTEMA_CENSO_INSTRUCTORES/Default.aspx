@@ -54,7 +54,7 @@
     <div class ="row text-center">
             <%--<div class="col-lg-1"></div>--%>
             <div class="col-lg-12">
-                <span class="caja-titulo-text" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight:700;font-size:16px; color:#049475">SISTEMA DE INSCRIPCIÓN PARA INSTRUCTORES </span>
+                <span class="caja-titulo-text" style="font-family:'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; font-weight:700;font-size:16px; color:#049475">SISTEMA DE REGISTRO DE FACILITADORES</span>
             </div>
             <%--<div class="col-lg-1"></div>--%>
         </div><br /><br />
