@@ -145,41 +145,7 @@
             prepararEliminar()
       
             $("#agregar").click(function () {
-                $('#experiencias').append(` <div class="row" >
-        <div class=" form-group col-md-3" style="text-align:center" >
-            <select class="selectpicker seltipo" id="seltipo">
-                <option selected="selected">Seleccione</option>
-               <option value="1">Censo</option>
-               <option value="2">Encuesta</option>
-               <option value="3">Investigación Especial</option>
-               <option value="4">Otros(Especifique)</option>
-            </select>
-            <br /><br />
-            <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control descripcion" id="desc"/>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker seltema">
-                <option selected="selected " value="0">Seleccione</option>
-               <option value="1">Metodología</option>
-               <option value="2">Cartografía</option>
-               <option value="3">Administrativo y Presupuesto</option>
-               <option value="4">Tecnología</option>
-
-            </select>
-        </div>
-         <div class="col-md-2" style="text-align:center">
-            <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
-        </div>
-         <div class="col-md-1" style="text-align:center">
-             <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
-                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
-            </a>
-        </div>
-          <div class ="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
-    </div>`);
+                $('#experiencias').append('<div class="row" ><div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo"><option selected="selected">Seleccione</option><option value="1">Censo</option><option value="2">Encuesta</option><option value="3">Investigación Especial</option><option value="4">Otros(Especifique)</option> </select> <br /><br /><div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px" /></div></div><div class="col-md-3" style="text-align:center"> <input type="text" class="form-control descripcion" id="desc"/></div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema"><option selected="selected " value="0">Seleccione</option><option value="1">Metodología</option><option value="2">Cartografía</option><option value="3">Administrativo y Presupuesto</option><option value="4">Tecnología</option></select></div><div class="col-md-2" style="text-align:center"> <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/></div><div class="col-md-1" style="text-align:center"> <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class ="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px" /></div></div>');
                 $(".selectpicker").selectpicker();
                 prepararSeltipo();
                 prepararEliminar();
@@ -243,7 +209,7 @@
                 data:"{'cedula':'"+c+"'}",
                 success: function (resp) {
                     let r = resp.d;
-                    if (resp.d == "ERROR" || r.includes("su cedula es")) {
+                    if (resp.d == "ERROR" || r.indexOf("su cedula es")!=-1) {
                         $("#experiencias :input, #experiencias a").attr("disabled", true);
                         $("#experiencias a").css("display", "none");
                         $("#exp-botones").css("display", "none");
@@ -361,7 +327,7 @@
                         Console.log(resp.d);
                         resetCampos();
                     }
-                    else if (resp.d.includes("WARNING")) {
+                    else if (resp.d.indexOf("WARNING")!=-1) {
                         console.log(resp.d);
                         resetCampos();
                     }else if(resp.d==""){
@@ -388,41 +354,7 @@
         }
 
         function resetCampos() {
-            $('#experiencias').html(` <div class="row" >
-        <div class=" form-group col-md-3" style="text-align:center" >
-            <select class="selectpicker seltipo" id="seltipo">
-                <option selected="selected">Seleccione</option>
-               <option value="1">Censo</option>
-               <option value="2">Encuesta</option>
-               <option value="3">Investigación Especial</option>
-               <option value="4">Otros(Especifique)</option>
-            </select>
-            <br /><br />
-            <div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px"  /></div>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control descripcion" id="desc"/>
-        </div>
-         <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker seltema">
-                <option selected="selected " value="0">Seleccione</option>
-               <option value="1">Metodología</option>
-               <option value="2">Cartografía</option>
-               <option value="3">Administrativo y Presupuesto</option>
-               <option value="4">Tecnología</option>
-
-            </select>
-        </div>
-         <div class="col-md-2" style="text-align:center">
-            <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/>
-        </div>
-         <div class="col-md-1" style="text-align:center">
-             <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
-                <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i>
-            </a>
-        </div>
-          <div class ="col-md-12"><hr  style=" height: 1px;background-color: #126bb4; margin-top:0px"  /></div>
-    </div>`);
+            $('#experiencias').html('<div class="row" ><div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo"><option selected="selected">Seleccione</option><option value="1">Censo</option><option value="2">Encuesta</option><option value="3">Investigación Especial</option><option value="4">Otros(Especifique)</option> </select> <br /><br /><div class ="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class ="form-control otrotipo" style=" width:220px; margin-left:35px" /></div></div><div class="col-md-3" style="text-align:center"> <input type="text" class="form-control descripcion" id="desc"/></div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema"><option selected="selected " value="0">Seleccione</option><option value="1">Metodología</option><option value="2">Cartografía</option><option value="3">Administrativo y Presupuesto</option><option value="4">Tecnología</option></select></div><div class="col-md-2" style="text-align:center"> <input type="text" class ="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)"/></div><div class="col-md-1" style="text-align:center"> <a class ="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class ="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px" /></div></div>');
             $(".selectpicker").selectpicker();
         }
 
@@ -444,9 +376,6 @@
             $("#experiencias a").css("display", "none");
             $("#exp-botones").css("display", "none");
         }
-      
-        
-
     </script>
 </body>
 </html>
