@@ -276,7 +276,7 @@
             hijos.each(function (key, el) {
                 let stipo = $(el).find(".selectpicker.seltipo");
                 let otipo = $(el).find(".form-control.otrotipoI");
-                let desc=$(el).find(".descripcion")
+                let desc=$(el).find(".descripcion");
                 let stema = $(el).find(".selectpicker.seltema");
                 let year = $(el).find(".year");        
                 let obj = {
@@ -405,8 +405,8 @@
         }
 
 
-        function habilitar(way=true){
-            
+        function habilitar(way){
+            way =  way==undefined?true:way
             blockFields();
             if(!way){
                 return;
