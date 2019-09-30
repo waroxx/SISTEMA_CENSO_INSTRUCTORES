@@ -47,21 +47,21 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
 
         public static string campos = @"<div class='row' >
         <div class=' form-group col-md-3' style='text-align:center' >
-            <select class='selectpicker seltipo' id='seltipo'>
-                <option selected='selected'>Seleccione</option>
+            <select class='selectpicker seltipo' id='seltipo' required='required'>
+                <option selected='selected' value='0'>Seleccione</option>
                <option {{tp}}value='1'>Censo</option>
                <option {{tp}}value='2'>Encuesta</option>
                <option {{tp}}value='3'>Investigación Especial</option>
                <option {{tp}}value='4'>Otros(Especifique)</option>
             </select>
             <br /><br />
-            <div class ='form-group otrotipo' id='otrotipo' style='{{DISPLAY}}'><input type='text' class ='form-control otrotipo' style=' width:220px; margin-left:35px'  value='{{OTIPO}}'  /></div>
+            <div class ='form-group otrotipo' id='otrotipo' style='{{DISPLAY}}'><input type='text' class ='form-control otrotipoI' style=' width:220px; margin-left:35px'  value='{{OTIPO}}' required=''  /></div>
         </div>
          <div class='col-md-3' style='text-align:center'>
-            <input type='text' class='form-control descripcion' id='desc' value='{{DESC}}'/>
+            <input type='text' class='form-control descripcion' id='desc' value='{{DESC}}' required='required'/>
         </div>
          <div class='col-md-3' style='text-align:center'>
-           <select class='selectpicker seltema'>
+           <select class='selectpicker seltema' required='required'>
                 <option selected='selected ' value='0'>Seleccione</option>
                <option {{tm}}value='1'>Metodología</option>
                <option {{tm}}value='2'>Cartografía</option>
@@ -71,7 +71,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
             </select>
         </div>
          <div class='col-md-2' style='text-align:center'>
-            <input type='text' class='form-control year' id='year' maxlength='4' onkeyup='this.value=Numeros(this.value, this)' value='{{YEAR}}'/>
+            <input type='text' class='form-control year' id='year' maxlength='4' onkeyup='this.value=Numeros(this.value, this)' value='{{YEAR}}' required='required'/>
         </div>
          <div class='col-md-1' style='text-align:center'>
              <a class ='btn btn-danger eliminar' href='javascript:void(0);' aria-label='Delete'>
