@@ -283,7 +283,7 @@
                     TIENE_EXPERIENCIA:SiNo,
                     INDICE:key,
                     TIPO_ACTIVIDAD: $(stipo[0]).val(),
-                    TIPO_ACTIVIDAD_ESP: $(otipo[0]).val(),
+                    TIPO_ACTIVIDAD_ESP: $(stipo[0]).val()== "4" ? $(otipo[0]).val() : null,
                     DESCRIPCION: $(desc[0]).val(),
                     TEMA: $(stema[0]).val(),
                     YEAR:$(year[0]).val()
