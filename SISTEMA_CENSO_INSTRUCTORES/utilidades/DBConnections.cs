@@ -5,6 +5,7 @@ using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.Data;
+using System.Data.SqlClient;
 using System.Diagnostics;
 using System.Linq;
 using System.Web;
@@ -127,6 +128,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                 return new DataTable();
             }
             System.Diagnostics.Debug.WriteLine(dt.Rows[0]["PrimerNombre"]);
+            insertDatosSIGRHU(dt, (string)ced["prov"], (string)ced["tom"], (string)ced["asi"], _ced);
             return dt;
         }
 
@@ -195,6 +197,53 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         }catch(Exception e){
                 Debug.WriteLine(e.Message);
                 return false;
+            }
+            return true;
+        }
+
+        public bool insertDatosSIGRHU(DataTable dt, string prov, string tom, string asi, string cedula)
+        {
+            var ConString = ConfigurationManager.ConnectionStrings["ConnectionStringCenso"].ToString();
+            var con = new SqlConnection(ConString);
+            SqlCommand cmd = new SqlCommand("CargarSIGRHU", con); //LLAMADA_SIGRHU
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@ced", SqlDbType.VarChar, 12).Value = cedula;
+            cmd.Parameters.Add("@cedproini", SqlDbType.VarChar, 4).Value = prov;
+            cmd.Parameters.Add("@cedtom", SqlDbType.VarChar, 4).Value = tom;
+            cmd.Parameters.Add("@cedasi", SqlDbType.VarChar, 5).Value = asi;
+            cmd.Parameters.Add("@apecas", SqlDbType.VarChar, 20).Value = dt.Rows[0]["ApellidoCasada"];
+            cmd.Parameters.Add("@apepat", SqlDbType.VarChar, 20).Value = dt.Rows[0]["ApellidoPaterno"];
+            cmd.Parameters.Add("@apemat", SqlDbType.VarChar, 20).Value = dt.Rows[0]["ApellidoMaterno"];
+            cmd.Parameters.Add("@nompri", SqlDbType.VarChar, 20).Value = dt.Rows[0]["PrimerNombre"];
+            cmd.Parameters.Add("@nomseg", SqlDbType.VarChar, 20).Value = dt.Rows[0]["SegundoNombre"];
+            cmd.Parameters.Add("@sexo", SqlDbType.VarChar, 1).Value = dt.Rows[0]["Sexo"]; ;
+            cmd.Parameters.Add("@telres", SqlDbType.VarChar, 8).Value = dt.Rows[0]["Teléfono Residencia"]; ;
+            cmd.Parameters.Add("@teltra", SqlDbType.VarChar, 8).Value = dt.Rows[0]["Teléfono Oficina"];
+            cmd.Parameters.Add("@telext", SqlDbType.VarChar, 4).Value = dt.Rows[0]["Extension"];
+            cmd.Parameters.Add("@fecnac", SqlDbType.VarChar, 10).Value = dt.Rows[0]["FechaNacimiento"];
+            cmd.Parameters.Add("@nomdir", SqlDbType.VarChar, 254).Value = dt.Rows[0]["Direccion"];
+            cmd.Parameters.Add("@nomdep", SqlDbType.VarChar, 100).Value = dt.Rows[0]["Departamento"];
+            cmd.Parameters.Add("@nomsec", SqlDbType.VarChar, 50).Value = dt.Rows[0]["Seccion"];
+            cmd.Parameters.Add("@titcar", SqlDbType.VarChar, 100).Value = dt.Rows[0]["Seccion"];
+            cmd.Parameters.Add("@estatus", SqlDbType.VarChar, 254).Value = dt.Rows[0]["Estatus Laboral"];
+            cmd.Parameters.Add("@aservicios", SqlDbType.VarChar, 254).Value = dt.Rows[0]["Años de Servicio"];
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+
+                dt.Load(reader);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return false;
+            }
+            finally
+            {
+                con.Close();
+                reader.Close();
             }
             return true;
         }

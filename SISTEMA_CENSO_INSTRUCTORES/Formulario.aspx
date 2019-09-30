@@ -275,7 +275,7 @@
             }
             hijos.each(function (key, el) {
                 let stipo = $(el).find(".selectpicker.seltipo");
-                let otipo = $(el).find(".form-control.otrotipo");
+                let otipo = $(el).find(".form-control.otrotipoI");
                 let desc=$(el).find(".descripcion")
                 let stema = $(el).find(".selectpicker.seltema");
                 let year = $(el).find(".year");        
@@ -304,6 +304,7 @@
                 success: function (resp) {
                     if (resp.d === "True") {
                         alert("Datos Guadados con Éxito");
+                        location.reload();
                     }
                    else if (resp.d === "False") {
                         alert("Error: datos no guardados");
@@ -430,18 +431,20 @@
         }
 
             function Requeridos(){
+                if($("#expNo").prop("checked")){
+                    Enviar();
+                    return;
+                }
                 var contador = 0;
-                var contenido = "Por favor llene los campos requeridos";
+                var contenido = "Todos los campos son requeridos, por favor llenar correctamente.";
                 let a = $('[required="required"]');
                 $('[required="required"]').each(function () {
                     if ($(this).val() == "" || $(this).val() == null || $(this).val() == "0") {
                         contador++;
                     }
-
-                   
                 });
                 if(contador>=1){
-                    alert(contador);
+                    alert(contenido);
                 }
                 else{
                     Enviar();
