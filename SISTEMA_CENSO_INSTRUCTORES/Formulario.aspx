@@ -69,7 +69,7 @@
     </div>	
     <br />
     <div id="SiNo" class="row form-group" style="border:solid; border-color:#E5007F;border-width:2px;border-radius:5px">
-        <label class="control-label col-md-11"  style="font-weight:bold;">¿Tiene usted o ha tenido experiencia como facilitador en Censos, encuestas o investigaciones especiales del INEC?</label><br />
+        <label class="control-label col-md-11"  style="font-weight:bold;">¿Ha tenido experiencia como facilitador en Censos, encuestas o investigaciones especiales del INEC o de otras instituciones?</label><br />
         <label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" name="experiencia" id="expSi" value="1" disabled="disabled" style="visibility:hidden" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" id="expNo" name="experiencia" value="1" disabled="disabled" style="visibility:hidden"/>&nbsp;No </label>
     </div>
     <br /><br />
@@ -102,10 +102,10 @@
             <div class="form-group otrotipo" id="otrotipo"  style="display:none;"><input type="text"  class="form-control otrotipoI" required="" style=" width:220px; margin-left:35px"/></div>
         </div>
          <div class="col-md-3" style="text-align:center">
-            <input type="text" class="form-control" id="desc" required="required"/>
+            <input type="text" class="form-control descripcion" id="desc" required="required"/>
         </div>
          <div class="col-md-3" style="text-align:center">
-           <select class="selectpicker" required="required">
+           <select class="selectpicker seltema" required="required">
                 <option selected="selected" value="0">Seleccione</option>
                <option value="1">Metodología</option>
                <option value="2">Cartografía</option>
@@ -115,7 +115,7 @@
             </select>
         </div>
          <div class="col-md-2" style="text-align:center">
-            <input type="text" class="form-control" id="year" maxlength="4" required="required" onkeyup="this.value=Numeros(this.value,this)"/>
+            <input type="text" class="form-control year" id="year" maxlength="4" required="required" onkeyup="this.value=Numeros(this.value,this)"/>
         </div>
          <div class="col-md-1" style="text-align:center">
              <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete" >
@@ -327,8 +327,7 @@
                 contentType: "application/JSON",
                 data: "{'cedula':'" + ced + "'}",
                 success: function (resp) {
-                    try{
-                        let obj = $.parseJSON(resp.d);
+                    
                     if (resp.d === "ERROR") {
                         Console.log(resp.d);
                         resetCampos();
@@ -344,17 +343,17 @@
                     prepararEliminar();
                     revisarHijos();
                     }
-                    else if (obj.hasOwnProperty("Exp")) {
+                    else if ($.parseJSON(resp.d).hasOwnProperty("Exp")) {
                         console.log();
-                        if(obj.TieneExperiencia){
+                        if ($.parseJSON(resp.d).TieneExperiencia) {
                             $("#expNo").prop('checked',false);
                         $("#expSi").prop('checked',true);
                         }
-                        if(!obj.TieneExperiencia){
+                        if (!$.parseJSON(resp.d).TieneExperiencia) {
                             $("#expSi").prop('checked',false);
                             $("#expNo").prop('checked',true);
                         }
-                        $('#experiencias').html(obj.Exp);
+                        $('#experiencias').html($.parseJSON(resp.d).Exp);
                         $(".selectpicker").selectpicker();
                         $(".selectpicker").selectpicker('refresh');
                         prepararSeltipo();
@@ -362,10 +361,7 @@
                         revisarHijos();
                         habilitar(true);
                     }
-                    }catch(error){
-                        let obj={}
-                        console.log("no object recived");
-                    }
+                    
                 },
                 error: function (xhr, status, error) {
                     alert(xhr.responseText);

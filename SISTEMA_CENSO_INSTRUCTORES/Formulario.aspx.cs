@@ -5,6 +5,7 @@ using SISTEMA_CENSO_INSTRUCTORES.utilidades;
 using System;
 using System.Collections.Generic;
 using System.Data;
+using System.Diagnostics;
 using System.Linq;
 using System.Web;
 using System.Web.Services;
@@ -105,14 +106,21 @@ namespace SISTEMA_CENSO_INSTRUCTORES
             }
             if (fs == cedula || fs == "ADMIN")
             {
-            DBConnections dbc = new DBConnections();
-            var Exp = dbc.getExpIntructores(cedula);
-            JObject response = new JObject();
-                response["TieneExperiencia"] = Exp.First().TIENE_EXPERIENCIA;
-                response["Exp"]= ExpFormatter(Exp);
-                return response.ToString();
-            //JObject jo = JObject.FromObject(Exp);
-            //return jo.ToString();
+                try {
+                    DBConnections dbc = new DBConnections();
+                    var Exp = dbc.getExpIntructores(cedula);
+                    JObject response = new JObject();
+                    response["TieneExperiencia"] = Exp.First().TIENE_EXPERIENCIA;
+                    response["Exp"] = ExpFormatter(Exp);
+                    return response.ToString();
+                    //JObject jo = JObject.FromObject(Exp);
+                    //return jo.ToString();
+                }
+                catch (InvalidOperationException e)
+                {
+                    Debug.WriteLine(e.Message);
+                    return "WARNING: aún no ha guardado datos";
+                } 
             }
             if (fs != cedula)
             {
