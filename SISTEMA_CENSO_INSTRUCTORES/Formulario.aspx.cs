@@ -116,7 +116,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                     //JObject jo = JObject.FromObject(Exp);
                     //return jo.ToString();
                 }
-                catch (InvalidOperationException e)
+                catch (Exception e)
                 {
                     Debug.WriteLine(e.Message);
                     return "WARNING: aún no ha guardado datos";
