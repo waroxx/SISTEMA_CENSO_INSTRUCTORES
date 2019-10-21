@@ -133,6 +133,22 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         }
 
         [WebMethod]
+        public static string getDesc(string id)
+        {
+                try
+                {
+                    DBConnections dbc = new DBConnections();
+                    var desc = dbc.getDescripciones(id);
+                    return desc;
+                }
+                catch (Exception e)
+                {
+                    Debug.WriteLine(e.Message);
+                    return "[]";
+                }           
+        }
+
+        [WebMethod]
         public static string postExperiencias(string experiencias, string cedula)
         {
             WebForm2 f = new WebForm2();
@@ -196,9 +212,12 @@ namespace SISTEMA_CENSO_INSTRUCTORES
 
         public static string ExpFormatter(List<T_EXPERIENCIA_INSTRUCTORES> exList)
         {
+
+            string acts = "";
             string output = "";
             foreach (var item in exList)
             {
+                acts = "";
                 var campos = HtmlPaterns.campos;
                 campos = campos.Replace("{{tp}}value='" + item.TIPO_ACTIVIDAD + "'", "value='" + item.TIPO_ACTIVIDAD + "' selected");
                 
@@ -206,14 +225,24 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                 {
                     campos = campos.Replace("{{DISPLAY}}", "display:block");
                     campos = campos.Replace("{{OTIPO}}", item.TIPO_ACTIVIDAD_ESP);
+                    acts = HtmlPaterns.descInput.Replace("{{DESC}}", item.DESCRIPCION); 
                 }
                 else
                 {
                     campos = campos.Replace("{{DISPLAY}}", "display:none");
                     campos = campos.Replace("{{OTIPO}}", item.TIPO_ACTIVIDAD_ESP);
+                    DBConnections db = new DBConnections();
+                    var ja = JArray.Parse(db.getDescripciones("0" + item.TIPO_ACTIVIDAD));
+                    foreach (var i in ja)
+                    {
+                        acts += "<option value='"+i["ID"]+"'>"+i["DESCRIPCION"]+"</option>";
+                    }
+                    acts = acts.Replace("value='"+item.DESCRIPCION+"'", "selected='selected' value='" + item.DESCRIPCION + "'");
+                    acts = HtmlPaterns.descSelect.Replace("{{campos}}", acts);
                 }
+
                 campos = campos.Replace("{{tm}}value='" + item.TEMA + "'", "value='" + item.TEMA + "' selected");
-                campos = campos.Replace("{{DESC}}", item.DESCRIPCION);
+                campos = campos.Replace("{{DESC}}", acts);
                 campos = campos.Replace("{{YEAR}}", item.YEAR);
                 campos = campos.Replace("{{tm}}", "");
                 campos = campos.Replace("{{tp}}", "");

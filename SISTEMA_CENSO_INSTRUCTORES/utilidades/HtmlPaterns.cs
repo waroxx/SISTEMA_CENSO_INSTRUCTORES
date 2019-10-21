@@ -45,6 +45,16 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
       </div>
         <div class='row'><br /></div>";
 
+        public static string descSelect = @"
+        <select type='text' class='form-control descripcion' id='desc' required='required'>
+                <option  value='0'>Seleccione</option>
+                 {{campos}}
+             </select>";
+
+        public static string descInput = @"
+            <input type='text' class='form-control descripcion' id='desc' required='required' value='{{DESC}}'/>
+        ";
+
         public static string campos = @"<div class='row' >
         <div class=' form-group col-md-3' style='text-align:center' >
             <select class='selectpicker seltipo' id='seltipo' required='required'>
@@ -58,7 +68,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
             <div class ='form-group otrotipo' id='otrotipo' style='{{DISPLAY}}'><input type='text' class ='form-control otrotipoI' style=' width:220px; margin-left:35px'  value='{{OTIPO}}' required=''  /></div>
         </div>
          <div class='col-md-3' style='text-align:center'>
-            <input type='text' class='form-control descripcion' id='desc' value='{{DESC}}' required='required'/>
+            {{DESC}}
         </div>
          <div class='col-md-3' style='text-align:center'>
            <select class='selectpicker seltema' required='required'>
