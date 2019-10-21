@@ -425,6 +425,7 @@
             //if()
             //alert($("#expSi").prop('checked'))
             if ($("#expSi").prop('checked')) {
+                prepararSeltipo();
                 $("#experiencias :input, #experiencias a").attr("disabled", false);
                 $("#experiencias a").css("display", "block");
                 $("#agregar").css("visibility", "visible");
