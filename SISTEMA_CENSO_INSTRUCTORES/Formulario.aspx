@@ -66,6 +66,9 @@
         <div id="datos-generales" class="col-md-4" style="padding-left:50px;padding-right:50px;">
         ...
     </div>
+        <div id="datos-generales" class="col-md-4" style="padding-left:50px;padding-right:50px;color:#E5007F;">
+        <b>Si usted tiene mas de 3 años haciendo la misma actividad,<br /> por favor registrar solo las ultimas 3 que hizo. Gracias.</b>
+    </div>
     </div>	
     <br />
     <div id="SiNo" class="row form-group" style="border:solid; border-color:#E5007F;border-width:2px;border-radius:5px">
@@ -212,7 +215,7 @@
 
         function revisarHijos() {
             if ($('#experiencias').children().length >= 3) {
-                $("#experiencias").attr('style','overflow-y:auto;overflow-x:hidden; height:340px');
+                $("#experiencias").attr('style', 'overflow-y:auto;overflow-x:hidden; height:340px;box-shadow: 0px 4px 2px -2px gray;');
             }
             else {
                 $("#experiencias").removeAttr('style');
@@ -422,8 +425,7 @@
             }
             $("#SiNo :input").prop("disabled", false);
             $("#SiNo :input, #SiNo >.radio-inline").css("visibility", "visible");
-            //if()
-            //alert($("#expSi").prop('checked'))
+
             if ($("#expSi").prop('checked')) {
                 prepararSeltipo();
                 $("#experiencias :input, #experiencias a").attr("disabled", false);
