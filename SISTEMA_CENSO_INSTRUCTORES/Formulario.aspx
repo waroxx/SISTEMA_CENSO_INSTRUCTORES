@@ -67,7 +67,7 @@
         ...
     </div>
         <div id="datos-generales" class="col-md-4" style="padding-left:50px;padding-right:50px;color:#E5007F;">
-        <b>Si usted tiene mas de 3 años haciendo la misma actividad,<br /> por favor registrar solo las ultimas 3 que hizo. Gracias.</b>
+        <b>Si usted tiene más de tres años dictando la misma capacitación,<br /> por favor registre solo las tres últimas.</b>
     </div>
     </div>	
     <br />
