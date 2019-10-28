@@ -6,7 +6,8 @@ namespace SISTEMA_CENSO_INSTRUCTORES
 {
     public partial class Startup {
         public void Configuration(IAppBuilder app) {
-           // ConfigureAuth(app);
+            // ConfigureAuth(app);
+
         }
     }
 }
