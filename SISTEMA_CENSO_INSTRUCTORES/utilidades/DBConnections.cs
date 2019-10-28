@@ -136,7 +136,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
         {
             try
             {
-                using (var ctx = new Contexto()) 
+                using (var ctx = new Contexto())
                 {
                     List<T_EXPERIENCIA_INSTRUCTORES> experiencias = ctx.T_EXPERIENCIA_INSTRUCTORES.Where(e => e.CED == CED).ToList();
                     if (experiencias == null)
