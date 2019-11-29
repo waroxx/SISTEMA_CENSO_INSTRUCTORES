@@ -1,4 +1,5 @@
-﻿using Newtonsoft.Json.Linq;
+﻿using Newtonsoft.Json;
+using Newtonsoft.Json.Linq;
 using SISTEMA_CENSO_INSTRUCTORES.Models;
 using SISTEMA_CENSO_INSTRUCTORES.sigrhuProd;
 using System;
@@ -246,6 +247,36 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                 reader.Close();
             }
             return true;
+        }
+
+        public string getDescripciones(string id)
+        {
+            DataTable dt = new DataTable();
+            var ConString = ConfigurationManager.ConnectionStrings["Contexto"].ToString();
+            var con = new SqlConnection(ConString);
+            SqlCommand cmd = new SqlCommand("SEL_ENCUESTA", con); //LLAMADA_SIGRHU
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            cmd.Parameters.Add("@ACT", SqlDbType.VarChar, 2).Value = id;
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+
+                dt.Load(reader);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+                reader.Close();
+            }
+            string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return json;
         }
 
         public JObject parseCedula(string ced)
