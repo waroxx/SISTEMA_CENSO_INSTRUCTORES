@@ -73,12 +73,14 @@
     <br />
     <div id="SiNo" class="row form-group" style="border:solid; border-color:#E5007F;border-width:2px;border-radius:5px">
         <label class="control-label col-md-11"  style="font-weight:bold;">¿Ha tenido experiencia como facilitador en Censos, encuestas o investigaciones especiales del INEC o de otras instituciones?</label><br />
-        <label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" name="experiencia" id="expSi" value="1" disabled="disabled" style="visibility:hidden" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" id="expNo" name="experiencia" value="1" disabled="disabled" style="visibility:hidden"/>&nbsp;No </label>
+        <label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" name="experiencia" id="expSi" value="1" disabled="disabled" style="visibility:hidden" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" id="expNo" name="experiencia" value="1" disabled="disabled" style="visibility:hidden"/>&nbsp;No </label> <br />
+         <label class="control-label col-md-11"  style="font-weight:bold;">¿Tiene usted formación académica y/o experiencia en docencia?</label><br />
+        <label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" name="formacion" id="formSi" value="1" disabled="disabled" style="visibility:hidden" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" id="formNo" name="formacion" value="1" disabled="disabled" style="visibility:hidden"/>&nbsp;No </label>
     </div>
     <br /><br />
     <div class="row" >
         <div class="col-md-3" style="text-align:center">
-            <label style="font-size:16px; font-weight:bold">Tipo de Actividad</label>
+            <label style="font-size:16px; font-weight:bold">Tipo de Actividad y/o Formación académica</label>
         </div>
          <div class="col-md-3" style="text-align:center">
             <label style="font-size:16px; font-weight:bold">Descripción</label>
@@ -99,7 +101,10 @@
                <option value="1">Censo</option>
                <option value="2">Encuesta</option>
                <option value="3">Investigación Especial</option>
-               <option value="4">Otros(Especifique)</option>
+               <option value="4">Formación Académica</option>
+               <option value="5">Experiencia en Docencia</option>
+                <option value="6">Otros(Especifique)</option>
+
             </select>
             <br /><br />
             <div class="form-group otrotipo" id="otrotipo"  style="display:none;"><input type="text"  class="form-control otrotipoI" required="" style=" width:220px; margin-left:35px"/></div>
@@ -110,7 +115,7 @@
                 <option selected="selected" value="0">Seleccione</option>
              </select>
         </div>
-         <div class="col-md-3" style="text-align:center">
+         <div class="col-md-3" id='temas' style="text-align:center">
            <select class="selectpicker seltema" required="required">
                 <option selected="selected" value="0">Seleccione</option>
                <option value="1">Metodología</option>
@@ -180,7 +185,7 @@
                     let otipoI = $(padre).find(".otrotipoI");
                     let desc = $(padre).find(".descripcion");
 
-                    if (tipo == '4') {
+                    if (tipo == '4'||tipo == '5'||tipo == '6' ) {
                         $(otipo).css('display', 'block');
                         $(otipoI).attr('required', 'required');
                         $(desc).replaceWith($('<input type="text" class="form-control descripcion" id="desc" required="required"/>'));
@@ -190,6 +195,13 @@
                         $(otipoI).removeAttr('required');
                         $(desc).replaceWith($('<select type="text" class="form-control descripcion" id="desc" required="required"><option selected="selected" value="0">Seleccione</option></select>'));
                         getDescripcion(this);
+                    }
+
+                    if (tipo == '5' || tipo == '6') {
+                        $(temas).css('visibility', 'hidden');
+                    }
+                    else {
+                        $(temas).css('visibility', 'visible');
                     }
                     
 
