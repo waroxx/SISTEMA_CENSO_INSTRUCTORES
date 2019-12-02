@@ -62,8 +62,11 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                <option {{tp}}value='1'>Censo</option>
                <option {{tp}}value='2'>Encuesta</option>
                <option {{tp}}value='3'>Investigación Especial</option>
-               <option {{tp}}value='4'>Otros(Especifique)</option>
-            </select>
+               <option {{tp}}value='4'>Formación Académica</option>
+               <option {{tp}}value = '5' > Experiencia en Docencia</option>
+               <option {{tp}}value = '6' > Otros(Especifique) </ option >
+    
+                </select>
             <br /><br />
             <div class ='form-group otrotipo' id='otrotipo' style='{{DISPLAY}}'><input type='text' class ='form-control otrotipoI' style=' width:220px; margin-left:35px'  value='{{OTIPO}}' required=''  /></div>
         </div>
