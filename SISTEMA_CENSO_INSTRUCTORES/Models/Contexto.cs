@@ -8,7 +8,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
     public partial class Contexto : DbContext
     {
         public Contexto()
-            : base("name=Contexto3")
+            : base("name=Contexto")
         {
         }
 
@@ -29,6 +29,10 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
 
             modelBuilder.Entity<T_ADMINISTRADORES2020>()
                 .Property(e => e.AdminCenso)
+                .IsUnicode(false);
+
+            modelBuilder.Entity<T_ADMINISTRADORES2020>()
+                .Property(e => e.Provincia)
                 .IsUnicode(false);
 
             modelBuilder.Entity<T_DATOS_DEL_COLABORADOR>()
