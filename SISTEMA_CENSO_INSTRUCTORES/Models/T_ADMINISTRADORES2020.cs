@@ -18,5 +18,8 @@ namespace SISTEMA_CENSO_INSTRUCTORES.Models
 
         [StringLength(50)]
         public string AdminCenso { get; set; }
+
+        [StringLength(50)]
+        public string Provincia { get; set; }
     }
 }

@@ -173,7 +173,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                                 oldExp.TEMA = exp.TEMA;
                                 oldExp.DESCRIPCION = exp.DESCRIPCION;
                                 oldExp.YEAR = exp.YEAR;
-                                oldExp.TIENE_EXPERIENCIA = exp.TIENE_EXPERIENCIA;
+                                oldExp.TIENE_EXPERIENCIA_INEC = exp.TIENE_EXPERIENCIA_INEC;
                                 oldExp.UPDATE_POR = usuario;
                             }
                         }
