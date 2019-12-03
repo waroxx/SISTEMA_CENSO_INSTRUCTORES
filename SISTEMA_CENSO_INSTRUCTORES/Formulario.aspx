@@ -35,7 +35,7 @@
 <div class="container-fluid">
 
 <div class="card border-primary col-md-10 offset-1"  style="margin-top:20px">
-<div class="card-header text-light bg-primary d-flex"><div class="col-md-10 m-auto "><h2 class="card-title" style="text-align:left; font-weight:bold; font-size:25px">Registro de facilitadores con experiencia del INEC</h2></div>
+<div class="card-header text-light bg-primary d-flex"><div class="col-md-10 m-auto "><h2 class="card-title" style="text-align:left; font-weight:bold; font-size:25px">Registro de facilitadores con experiencia del INEC</h2><h4  style="text-align:left; font-weight:bold; font-size:18px">Registro de Colaboradores con formación académica y/o experiencia en docencia.</h4></div>
 <div class="col-md-2" style="text-align:right;"><a class="btn btn-light btn-sm" href="javascript:CerrarSession();" id="salir"   >
                 <b style="font-size:18px;">Salir</b>&nbsp;&nbsp;<i class="fa fa-share" aria-hidden="true" style="font-size:24px; "></i>
 </a></div>
@@ -76,12 +76,12 @@
         <div id="datos-generales" class="col-md-4" style="padding-left:50px;padding-right:50px;">
         ...
     </div>
-        <div id="datos-generales" class="col-md-4" style="padding-left:50px;padding-right:50px;color:#E5007F;">
-        <b>Si usted tiene más de tres años dictando la misma capacitación,<br /> por favor registre solo las tres últimas.</b>
+        <div id="datos-generales" class="col-md-4" style="padding-left:20px;padding-right:50px;color:#E5007F;">
+        <b style="font-size:14px"><b style="color:#0000ff; font-size:18px; font-weight:700">*</b>Si usted tiene más de tres años dictando la misma capacitación o más de tres años de experiencia,por favor registre solo las tres últimas.</b><br /><b style="font-size:14px"><b style="color:#0000ff;font-size:18px; font-weight:700">*</b>Si tiene formación académica en docencia, por favor registre el grado más alto.</b>
     </div>
     </div>	
     <br />
-    <div id="SiNo" class="row form-group" style="border:solid; border-color:#E5007F;border-width:2px;border-radius:5px">
+    <div id="SiNo" class="row form-group" style="border:solid; border-color:#126bb4;border-width:2px;border-radius:5px">
         <label class="control-label col-md-11"  style="font-weight:bold;">¿Ha tenido experiencia como facilitador en Censos, encuestas o investigaciones especiales del INEC o de otras instituciones?</label><br />
         <label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" name="experiencia" id="expSi" value="1" disabled="disabled" style="visibility:hidden" />&nbsp;Sí </label>  &nbsp;&nbsp;&nbsp;&nbsp;<label class="radio-inline" onclick="habilitar()" style="visibility:hidden"><input  type="radio" id="expNo" name="experiencia" value="1" disabled="disabled" style="visibility:hidden"/>&nbsp;No </label> <br />
          <label class="control-label col-md-11"  style="font-weight:bold;">¿Tiene usted formación académica y/o experiencia en docencia?</label><br />
@@ -95,7 +95,7 @@
          <div class="col-md-3" style="text-align:center">
             <label style="font-size:16px; font-weight:bold">Descripción</label>
         </div>
-         <div class="col-md-3" style="text-align:center">
+         <div class="col-md-3 tema" style="text-align:center">
             <label style="font-size:16px; font-weight:bold">Tema</label>
         </div>
          <div class="col-md-2" style="text-align:center">
@@ -176,7 +176,7 @@
             prepararEliminar();
       
             $("#agregar").click(function () {
-                $('#experiencias').append('<div class="row fieldRow" > <div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo" required="required"> <option selected="selected" value="0">Seleccione</option> <option value="1">Censo</option> <option value="2">Encuesta</option> <option value="3">Investigación Especial</option> <option value="4">Formación Académica</option> <option value="5">Experiencia en Docencia</option> <option value="6">Otros(Especifique)</option> </select> <br/><br/> <div class="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class="form-control otrotipoI" style=" width:220px; margin-left:35px"/></div></div><div class="col-md-3" style="text-align:center"> <select type="text" class="form-control descripcion" id="desc" required="required"> <option selected="selected" value="0">Seleccione</option> </select> </div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema" required="required"> <option selected="selected " value="0">Seleccione</option> <option value="1">Metodología</option> <option value="2">Cartografía</option> <option value="3">Administrativo y Presupuesto</option> <option value="4">Tecnología</option> </select> </div><div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"> <hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/> </div></div>');
+                $('#experiencias').append('<div class="row" > <div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo" required="required"> <option selected="selected" value="0">Seleccione</option> <option value="1">Censo</option> <option value="2">Encuesta</option> <option value="3">Investigación Especial</option> <option value="4">Formación Académica</option> <option value="5">Experiencia en Docencia</option> <option value="6">Otros(Especifique)</option> </select> <br/><br/> <div class="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class="form-control otrotipoI" style=" width:220px; margin-left:35px"/></div></div><div class="col-md-3" style="text-align:center"> <select type="text" class="form-control descripcion" id="desc" required="required"> <option selected="selected" value="0">Seleccione</option> </select> </div><div class="col-md-3 tema"  style="text-align:center; display:block;"> <select class="selectpicker seltema" required="required"> <option selected="selected " value="0">Seleccione</option> <option value="1">Metodología</option> <option value="2">Cartografía</option> <option value="3">Administrativo y Presupuesto</option> <option value="4">Tecnología</option> </select> </div><div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"> <hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/> </div></div>');
                 $(".selectpicker").selectpicker();
                 prepararSeltipo();
                 prepararEliminar();
@@ -198,26 +198,33 @@
                     let otipo = $(padre).find(".otrotipo");
                     let otipoI = $(padre).find(".otrotipoI");
                     let desc = $(padre).find(".descripcion");
+                    let tema = $(padre).find(".seltema");
+                    
 
-                    if (tipo == '4'||tipo == '5'||tipo == '6' ) {
+                    if (tipo == '4' || tipo == '5') {
+                        $(otipo).css('display', 'none');
+                        $(otipoI).removeAttr('required');
+                        $(desc).replaceWith($('<input type="text" class="form-control descripcion" id="desc" required="required"/>'));
+                        $(tema).css('visibility', 'hidden');
+                        $(".tema").css('visibility', 'hidden');
+                        getDescripcion(this);
+                    }
+                    else if (tipo == '6') {
                         $(otipo).css('display', 'block');
                         $(otipoI).attr('required', 'required');
                         $(desc).replaceWith($('<input type="text" class="form-control descripcion" id="desc" required="required"/>'));
+                        $(tema).css('visibility', 'visible');
+                        $(".tema").css('visibility', 'visible');
                     }
                     else {
                         $(otipo).css('display', 'none');
                         $(otipoI).removeAttr('required');
                         $(desc).replaceWith($('<select type="text" class="form-control descripcion" id="desc" required="required"><option selected="selected" value="0">Seleccione</option></select>'));
+                        $(tema).css('visibility', 'visible');
+                        $(".tema").css('visibility', 'visible');
                         getDescripcion(this);
                     }
 
-                    if (tipo == '5' || tipo == '6') {
-                        $(temas).css('visibility', 'hidden');
-                    }
-                    else {
-                        $(temas).css('visibility', 'visible');
-                    }
-                    
 
                 });
 
@@ -452,13 +459,13 @@
             $("#SiNo :input").prop("disabled", false);
             $("#SiNo :input, #SiNo >.radio-inline").css("visibility", "visible");
 
-            if ($("#expSi").prop('checked')) {
+            if ($("#expSi").prop('checked')|| $("#formSi").prop('checked')) {
                 prepararSeltipo();
                 $("#experiencias :input, #experiencias a").attr("disabled", false);
                 $("#experiencias a").css("display", "block");
                 $("#agregar").css("visibility", "visible");
                 $("#enviar").css("display", "block");
-            } else if ($("#expNo").prop('checked')) {
+            } else if ($("#expNo").prop('checked') || $("#formNo").prop('checked')) {
                 $("#enviar").css("display", "block");
             }
             $(".selectpicker").selectpicker('refresh');

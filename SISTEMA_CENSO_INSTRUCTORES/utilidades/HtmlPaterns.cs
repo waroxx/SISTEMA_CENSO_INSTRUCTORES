@@ -73,7 +73,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
          <div class='col-md-3' style='text-align:center'>
             {{DESC}}
         </div>
-         <div class='col-md-3' style='text-align:center'>
+         <div class='col-md-3 tema' style='text-align:center'>
            <select class='selectpicker seltema' required='required'>
                 <option selected='selected ' value='0'>Seleccione</option>
                <option {{tm}}value='1'>Metodología</option>
