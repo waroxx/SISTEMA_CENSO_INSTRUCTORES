@@ -19,7 +19,17 @@
     <%--<link href="Content/font-awesome.min.css" rel="stylesheet" />--%>
     <link href="Content/bootstrap-select.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+    <script src="Scripts/MyScripts/componentes.js"></script>
+    <script src="Scripts/MyScripts/subcomponentes.js"></script>
     <title>Instructores</title>
+    <style>
+        .fieldRow:nth-child(even){
+          background-color: #f0f0f0;
+        }
+        .fieldRow:nth-child(odd){
+          background-color: #d4e9ff;
+        }
+    </style>
 </head>
 <body>
 <div class="container-fluid">
@@ -94,17 +104,16 @@
     </div>
     <br />	
 <div id="experiencias">
-    <div class="row" >
+    <div class="row fieldRow" >
         <div class=" form-group col-md-3" style="text-align:center" >
             <select class="selectpicker seltipo" id="seltipo" required="required">
-                <option selected="selected" value="0">Seleccione</option>
+               <option selected="selected" value="0">Seleccione</option>
                <option value="1">Censo</option>
                <option value="2">Encuesta</option>
                <option value="3">Investigación Especial</option>
                <option value="4">Formación Académica</option>
                <option value="5">Experiencia en Docencia</option>
                <option value="6">Otros(Especifique)</option>
-
             </select>
             <br /><br />
             <div class="form-group otrotipo" id="otrotipo"  style="display:none;"><input type="text"  class="form-control otrotipoI" required="" style=" width:220px; margin-left:35px"/></div>
@@ -159,16 +168,21 @@
     <script>
         
         $(document).ready(function () {
+            descargarTemas();
+            descargarDescripciones();
+            descargarActividades();
             getCedulaRecomendada();
-            prepararSeltipo()
-            prepararEliminar()
+            prepararSeltipo();
+            prepararEliminar();
       
             $("#agregar").click(function () {
-                $('#experiencias').append('<div class="row" > <div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo" required="required"> <option selected="selected" value="0">Seleccione</option> <option value="1">Censo</option> <option value="2">Encuesta</option> <option value="3">Investigación Especial</option> <option value="4">Formación Académica</option> <option value="5">Experiencia en Docencia</option> <option value="6">Otros(Especifique)</option> </select> <br/><br/> <div class="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class="form-control otrotipoI" style=" width:220px; margin-left:35px"/></div></div><div class="col-md-3" style="text-align:center"> <select type="text" class="form-control descripcion" id="desc" required="required"> <option selected="selected" value="0">Seleccione</option> </select> </div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema" required="required"> <option selected="selected " value="0">Seleccione</option> <option value="1">Metodología</option> <option value="2">Cartografía</option> <option value="3">Administrativo y Presupuesto</option> <option value="4">Tecnología</option> </select> </div><div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"> <hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/> </div></div>');
+                $('#experiencias').append('<div class="row fieldRow" > <div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo" required="required"> <option selected="selected" value="0">Seleccione</option> <option value="1">Censo</option> <option value="2">Encuesta</option> <option value="3">Investigación Especial</option> <option value="4">Formación Académica</option> <option value="5">Experiencia en Docencia</option> <option value="6">Otros(Especifique)</option> </select> <br/><br/> <div class="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class="form-control otrotipoI" style=" width:220px; margin-left:35px"/></div></div><div class="col-md-3" style="text-align:center"> <select type="text" class="form-control descripcion" id="desc" required="required"> <option selected="selected" value="0">Seleccione</option> </select> </div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema" required="required"> <option selected="selected " value="0">Seleccione</option> <option value="1">Metodología</option> <option value="2">Cartografía</option> <option value="3">Administrativo y Presupuesto</option> <option value="4">Tecnología</option> </select> </div><div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"> <hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/> </div></div>');
                 $(".selectpicker").selectpicker();
                 prepararSeltipo();
                 prepararEliminar();
                 revisarHijos();
+                var objDiv = document.getElementById("experiencias");
+                objDiv.scrollTop = objDiv.scrollHeight;
             });
             blockFields();
         });
@@ -368,22 +382,22 @@
                     revisarHijos();
                     }
                     else if ($.parseJSON(resp.d).hasOwnProperty("Exp")) {
-                        console.log();
-                        if ($.parseJSON(resp.d).TieneExperiencia) {
-                            $("#expNo").prop('checked',false);
-                        $("#expSi").prop('checked',true);
-                        }
-                        if (!$.parseJSON(resp.d).TieneExperiencia) {
-                            $("#expSi").prop('checked',false);
-                            $("#expNo").prop('checked',true);
-                        }
-                        $('#experiencias').html($.parseJSON(resp.d).Exp);
-                        $(".selectpicker").selectpicker();
-                        $(".selectpicker").selectpicker('refresh');
-                        prepararSeltipo();
-                        prepararEliminar();
-                        revisarHijos();
-                        habilitar(true);
+                        cargarExperiencias($.parseJSON(resp.d));
+                        //if ($.parseJSON(resp.d).TieneExperiencia) {
+                        //    $("#expNo").prop('checked',false);
+                        //$("#expSi").prop('checked',true);
+                        //}
+                        //if (!$.parseJSON(resp.d).TieneExperiencia) {
+                        //    $("#expSi").prop('checked',false);
+                        //    $("#expNo").prop('checked',true);
+                        //}
+                       // $('#experiencias').html($.parseJSON(resp.d).Exp);
+                       // $(".selectpicker").selectpicker();
+                       // $(".selectpicker").selectpicker('refresh');
+                        //prepararSeltipo();
+                        //prepararEliminar();
+                        //revisarHijos();
+                        //habilitar(true);
                     }
                     
                 },
@@ -394,7 +408,7 @@
         }
 
         function resetCampos() {
-            $('#experiencias').html('<div class="row" > <div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo" required="required"> <option selected="selected" value="0">Seleccione</option> <option value="1">Censo</option> <option value="2">Encuesta</option> <option value="3">Investigación Especial</option> <option value="4">Formación Académica</option> <option value="5">Experiencia en Docencia</option> <option value="6">Otros(Especifique)</option> </select> <br/><br/> <div class="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class="form-control otrotipoI" style=" width:220px; margin-left:35px"/></div></div><div class="col-md-3" style="text-align:center"> <select type="text" class="form-control descripcion" id="desc" required="required"> <option selected="selected" value="0">Seleccione</option> </select> </div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema" required="required"> <option selected="selected " value="0">Seleccione</option> <option value="1">Metodología</option> <option value="2">Cartografía</option> <option value="3">Administrativo y Presupuesto</option> <option value="4">Tecnología</option> </select> </div><div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"> <hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/> </div></div>');
+            $('#experiencias').html('<div class="row fieldRow" > <div class=" form-group col-md-3" style="text-align:center" > <select class="selectpicker seltipo" id="seltipo" required="required"> <option selected="selected" value="0">Seleccione</option> <option value="1">Censo</option> <option value="2">Encuesta</option> <option value="3">Investigación Especial</option> <option value="4">Formación Académica</option> <option value="5">Experiencia en Docencia</option> <option value="6">Otros(Especifique)</option> </select> <br/><br/> <div class="form-group otrotipo" id="otrotipo" style="display:none"><input type="text" class="form-control otrotipoI" style=" width:220px; margin-left:35px"/></div></div><div class="col-md-3" style="text-align:center"> <select type="text" class="form-control descripcion" id="desc" required="required"> <option selected="selected" value="0">Seleccione</option> </select> </div><div class="col-md-3" style="text-align:center"> <select class="selectpicker seltema" required="required"> <option selected="selected " value="0">Seleccione</option> <option value="1">Metodología</option> <option value="2">Cartografía</option> <option value="3">Administrativo y Presupuesto</option> <option value="4">Tecnología</option> </select> </div><div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"> <hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/> </div></div>');
             $(".selectpicker").selectpicker();
             $("#expSi").prop('checked',false);
             $("#expNo").prop('checked', false);
@@ -492,6 +506,70 @@
                     }
                 });
             }
+            
+            function descargarActividades() {
+                $.ajax({
+                    type: "POST",
+                    url: "Formulario.aspx/getActividad",
+                    contentType: "application/JSON",
+                    success: function (resp) {
+                        localStorage.setItem('selTipo', resp.d);
+                        console.log("campos de tipo cargados");
+                    },
+                    error: function (xhr, status, error) {
+                        alert(xhr.responseText);
+                    }
+                });
+            }
+
+                function descargarDescripciones() {
+                    $.ajax({
+                        type: "POST",
+                        url: "Formulario.aspx/getDescFull",
+                        contentType: "application/JSON",
+                        success: function (resp) {
+                            localStorage.setItem('selDesc', resp.d);
+                            console.log("campos de descripcion");
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                }
+
+                function descargarTemas() {
+                    //$.ajax({
+                    //    type: "POST",
+                    //    url: "Formulario.aspx/getTema",
+                    //    contentType: "application/JSON",
+                    //    //data: "{'id':'" + id + "'}",
+                    //    success: function (resp) {
+                    //        localStorage.setItem('selTema', resp.d);
+                    //        console.log("campos de tema cargados");
+                    //    },
+                    //    error: function (xhr, status, error) {
+                    //        alert(xhr.responseText);
+                    //    }
+                    //});
+                    localStorage.setItem('selTema', '[{"id":"01","tema":"Metodología"},{"id":"02","tema":"Cartograía"},{"id":"03","tema":"Administrativo y Presupuesto"},{"id":"04","tema":"Tecnología"},]');
+                    console.log("campos de tema cargados");
+                }
+
+                function cargarExperiencias(exps) {
+                    $("#expNo").prop('checked', !exps.TieneExperienciaInec);
+                    $("#expSi").prop('checked', exps.TieneExperienciaInec);                      
+                    $("#formNo").prop('checked', !exps.TieneExperienciaDoc);
+                    $("#formSi").prop('checked', exps.TieneExperienciaDoc);
+                    
+                    generateField(exps);
+                    $(".selectpicker").selectpicker();
+                    $(".selectpicker").selectpicker('refresh');
+                    prepararSeltipo();
+                    prepararEliminar();
+                    revisarHijos();
+                    habilitar(true);
+                }
+            
                       
     </script>
 </body>

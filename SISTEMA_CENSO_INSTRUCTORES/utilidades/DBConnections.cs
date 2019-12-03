@@ -279,6 +279,63 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
             return json;
         }
 
+        public string getActividad()
+        {
+            DataTable dt = new DataTable();
+            var ConString = ConfigurationManager.ConnectionStrings["Contexto"].ToString();
+            var con = new SqlConnection(ConString);
+            SqlCommand cmd = new SqlCommand("SEL_ACTIVIDAD", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+
+                dt.Load(reader);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+                reader.Close();
+            }
+            string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return json;
+        }
+
+        public string getDescripcion_full()
+        {
+            DataTable dt = new DataTable();
+            var ConString = ConfigurationManager.ConnectionStrings["Contexto"].ToString();
+            var con = new SqlConnection(ConString);
+            SqlCommand cmd = new SqlCommand("SEL_ENCUESTA_FULL", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                dt.Load(reader);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+                reader.Close();
+            }
+            string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return json;
+        }
+
         public JObject parseCedula(string ced)
         {
             JObject jo = new JObject();

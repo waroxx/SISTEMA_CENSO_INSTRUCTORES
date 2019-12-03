@@ -110,8 +110,9 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                     DBConnections dbc = new DBConnections();
                     var Exp = dbc.getExpIntructores(cedula);
                     JObject response = new JObject();
-                    response["TieneExperiencia"] = Exp.First().TIENE_EXPERIENCIA_INEC;
-                    response["Exp"] = ExpFormatter(Exp);
+                    response["TieneExperienciaInec"] = Exp.First().TIENE_EXPERIENCIA_INEC;
+                    response["TieneExperienciaDoc"] = Exp.First().TIENE_EXPERIENCIA_DOCENTE;
+                    response["Exp"] = JArray.FromObject(Exp);
                     return response.ToString();
                     //JObject jo = JObject.FromObject(Exp);
                     //return jo.ToString();
@@ -146,6 +147,38 @@ namespace SISTEMA_CENSO_INSTRUCTORES
                     Debug.WriteLine(e.Message);
                     return "[]";
                 }           
+        }
+
+        [WebMethod]
+        public static string getActividad()
+        {
+            try
+            {
+                DBConnections dbc = new DBConnections();
+                var act = dbc.getActividad();
+                return act;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return "[]";
+            }
+        }
+
+        [WebMethod]
+        public static string getDescFull()
+        {
+            try
+            {
+                DBConnections dbc = new DBConnections();
+                var act = dbc.getDescripcion_full();
+                return act;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return "[]";
+            }
         }
 
         [WebMethod]
