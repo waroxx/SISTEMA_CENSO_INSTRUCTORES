@@ -229,6 +229,7 @@
                 });
 
             });
+            cargarSeltipo();
         }
 
         function prepararEliminar() {
@@ -576,8 +577,16 @@
                     revisarHijos();
                     habilitar(true);
                 }
-            
-                      
+
+                function cargarSeltipo() {
+                    let opciones = seltipo($("#expSi").prop('checked'), $("#formSi").prop('checked'));
+                    $(".selectpicker.seltipo").html('<option selected="selected" value="00">Seleccione</option>');
+                    opciones.map(function (item) {
+                        $(".selectpicker.seltipo").append('<option value="' + item.id + '">' + item.Actividad + '</option>');
+                    });
+//                    $(".selectpicker").selectpicker('refresh');
+                }
+
     </script>
 </body>
 </html>

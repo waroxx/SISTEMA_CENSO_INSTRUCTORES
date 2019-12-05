@@ -41,14 +41,12 @@ const cmps =
   '<div class="row fieldRow" > {{SELTIPO}} {{DESCRIPCION}} {{TEMA}}<div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/></div></div>';
 
 function seltipo(expINEC, expDOC) {
-    return JSON.parse(localStorage.getItem('selTipo'));
-    //try {
-
-    //    return expINEC && expDOC ? JSON.parse(localStorage.getItem('selTipo'))
-    //        : JSON.parse(localStorage.getItem('selTipo')).filter(item=> { return ["04", "05"].indexOf(item.ACTID) === expDOC });
-    //}catch(e){
-    //    return [];
-    //}
+    try {
+        return expINEC && expDOC ? JSON.parse(localStorage.getItem('selTipo'))
+            : JSON.parse(localStorage.getItem('selTipo')).filter(item=> { return (["04", "05"].indexOf(item.id)!==-1) === expDOC });
+    }catch(e){
+        return [];
+    }
     
 }
 
@@ -57,7 +55,7 @@ function seldesc() {
     //try {
 
     //    return expINEC && expDOC ? JSON.parse(localStorage.getItem('selTipo'))
-    //        : JSON.parse(localStorage.getItem('selTipo')).filter(item=> { return ["04", "05"].indexOf(item.ACTID) === expDOC });
+       //                         : JSON.parse(localStorage.getItem('selTipo')).filter(item=> { return (["04", "05"].indexOf(item.id) === -1) !== expDOC });
     //}catch(e){
     //    return [];
     //}
