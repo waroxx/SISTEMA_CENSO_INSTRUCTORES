@@ -3,63 +3,73 @@
 
 
 function generateField(exps) {
+    $("#experiencias").html("");
     exps.map(function (exp) {
-        $("#experiencias").append(campos(exp));
+        let a = campos(exp);
+        console.log(a);
+        $("#experiencias").append(a);
     });
 }
 
-
-
 function campos(exp) {
-    switch(exp){
-        case '1':
+    let catalogo = localStorage.getItem('selTipo')
+    switch (exp.TIPO_ACTIVIDAD) {
+        case '06':
             return cmps
-      .replace("{{SELTIPO}}", TIPO_otroTipo(seltipo(), "bomboclat"))
-      .replace("{{DESCRIPCION}}", DESC_campo("league of legends"))
-      .replace("{{TEMA}}", TEMA_visible([]));
-
-        case '2':
+      .replace("{{SELTIPO}}", TIPO_otroTipo(seltipo(exp.TIENE_EXPERIENCIA_INEC, exp.TIENE_EXPERIENCIA_DOCENTE), exp.TIPO_ACTIVIDAD_ESP))
+      .replace("{{DESCRIPCION}}", DESC_campo(exp.DESCRIPCION))
+      .replace("{{TEMA}}", TEMA_visible(selTema(), exp.TEMA)).replace("{{YEAR}}", exp.YEAR);
+        case '04':
             return cmps
-      .replace("{{SELTIPO}}", TIPO_default(seltipo(), "02"))
-      .replace("{{DESCRIPCION}}", DESC_campo("league of legends"))
-      .replace("{{TEMA}}", TEMA_visible([]));
-        case '3':
+      .replace("{{SELTIPO}}", TIPO_default(seltipo(exp.TIENE_EXPERIENCIA_INEC, exp.TIENE_EXPERIENCIA_DOCENTE), "04"))
+      .replace("{{DESCRIPCION}}", DESC_default(seldesc(exp.TIPO_ACTIVIDAD), exp.DESCRIPCION))
+      .replace("{{TEMA}}", TEMA_invisible(selTema())).replace("{{YEAR}}", exp.YEAR);
+        case '05':
             return cmps
-      .replace("{{SELTIPO}}", TIPO_default(seltipo(), "01"))
-      .replace("{{DESCRIPCION}}", DESC_default(seldesc(), "01"))
-      .replace("{{TEMA}}", TEMA_invisible([]));
+      .replace("{{SELTIPO}}", TIPO_default(seltipo(exp.TIENE_EXPERIENCIA_INEC, exp.TIENE_EXPERIENCIA_DOCENTE), "05"))
+      .replace("{{DESCRIPCION}}", DESC_campo(exp.DESCRIPCION))
+      .replace("{{TEMA}}", TEMA_invisible(selTema())).replace("{{YEAR}}", exp.YEAR);
+        case 'def':
+            return cmps
+      .replace("{{SELTIPO}}", TIPO_default(seltipo(exp.TIENE_EXPERIENCIA_INEC, exp.TIENE_EXPERIENCIA_DOCENTE), "00"))
+      .replace("{{DESCRIPCION}}", DESC_default(seldesc(exp.TIPO_ACTIVIDAD), ""))
+      .replace("{{TEMA}}", TEMA_visible(selTema(), exp.TEMA))
+            .replace("{{YEAR}}", "");
 
         default:
             return cmps
-      .replace("{{SELTIPO}}", TIPO_otroTipo(seltipo(), "bomboclat"))
-      .replace("{{DESCRIPCION}}", DESC_campo("league of legends"))
-      .replace("{{TEMA}}", TEMA_visible([]));
+      .replace("{{SELTIPO}}", TIPO_default(seltipo(exp.TIENE_EXPERIENCIA, exp.TIENE_EXPERIENCIA), exp.TIPO_ACTIVIDAD))
+      .replace("{{DESCRIPCION}}", DESC_default(seldesc(exp.TIPO_ACTIVIDAD), exp.DESCRIPCION))
+      .replace("{{TEMA}}", TEMA_visible(selTema(), exp.TEMA))
+      .replace("{{YEAR}}", exp.YEAR==null?"":exp.year);
     }
     
 }
 const cmps =
-  '<div class="row fieldRow" > {{SELTIPO}} {{DESCRIPCION}} {{TEMA}}<div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" id="year" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/></div></div>';
+  '<div class="row fieldRow" > {{SELTIPO}} {{DESCRIPCION}} {{TEMA}}<div class="col-md-2" style="text-align:center"> <input type="text" class="form-control year" value="{{YEAR}}" maxlength="4" onkeyup="this.value=Numeros(this.value,this)" required="required"/></div><div class="col-md-1" style="text-align:center"> <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete"> <i class="fa fa-trash-o " aria-hidden="true" style="font-size:20px;"></i> </a></div><div class="col-md-12"><hr style=" height: 1px;background-color: #126bb4; margin-top:0px"/></div></div>';
 
 function seltipo(expINEC, expDOC) {
     try {
         return expINEC && expDOC ? JSON.parse(localStorage.getItem('selTipo'))
-            : JSON.parse(localStorage.getItem('selTipo')).filter(item=> { return (["04", "05"].indexOf(item.id)!==-1) === expDOC });
+            : JSON.parse(localStorage.getItem('selTipo')).filter(function(item){ return (["04", "05"].indexOf(item.id)!==-1) === expDOC });
     }catch(e){
         return [];
     }
     
 }
 
-function seldesc() {
-    return JSON.parse(localStorage.getItem('selDesc'));
-    //try {
+function seldesc(act) {
+    //return JSON.parse(localStorage.getItem('selDesc'));
+    try {
+        return JSON.parse(localStorage.getItem('selDesc')).filter(function (item) { return item.ACTID == act });
+    }catch(e){
+        return [];
+    }
 
-    //    return expINEC && expDOC ? JSON.parse(localStorage.getItem('selTipo'))
-       //                         : JSON.parse(localStorage.getItem('selTipo')).filter(item=> { return (["04", "05"].indexOf(item.id) === -1) !== expDOC });
-    //}catch(e){
-    //    return [];
-    //}
+}
 
+function selTema() {
+    return JSON.parse(localStorage.getItem('selTema'));
 }
 
 

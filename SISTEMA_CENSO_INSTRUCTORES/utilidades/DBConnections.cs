@@ -174,6 +174,7 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
                                 oldExp.DESCRIPCION = exp.DESCRIPCION;
                                 oldExp.YEAR = exp.YEAR;
                                 oldExp.TIENE_EXPERIENCIA_INEC = exp.TIENE_EXPERIENCIA_INEC;
+                                oldExp.TIENE_EXPERIENCIA_DOCENTE = exp.TIENE_EXPERIENCIA_DOCENTE;
                                 oldExp.UPDATE_POR = usuario;
                             }
                         }
