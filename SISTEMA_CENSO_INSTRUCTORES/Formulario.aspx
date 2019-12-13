@@ -504,7 +504,7 @@
                 var contenido = "Todos los campos son requeridos, por favor llenar correctamente.";
                 let a = $('[required="required"]');
                 $('[required="required"]').each(function () {
-                    if ($(this).val() == "" || $(this).val() == null || $(this).val() == "0") {
+                    if ($(this).val() == "" || $(this).val() == null || $(this).val() == "0" || $(this).val() == "00") {
                         console.log($(this).val()+": error required");
                         contador++;
                     }
