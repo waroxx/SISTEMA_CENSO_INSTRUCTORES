@@ -41,7 +41,7 @@ function campos(exp) {
       .replace("{{SELTIPO}}", TIPO_default(seltipo(exp.TIENE_EXPERIENCIA, exp.TIENE_EXPERIENCIA), exp.TIPO_ACTIVIDAD))
       .replace("{{DESCRIPCION}}", DESC_default(seldesc(exp.TIPO_ACTIVIDAD), exp.DESCRIPCION))
       .replace("{{TEMA}}", TEMA_visible(selTema(), exp.TEMA))
-      .replace("{{YEAR}}", exp.YEAR==null?"":exp.year);
+      .replace("{{YEAR}}", exp.YEAR==null||exp.YEAR==undefined?"":exp.year);
     }
     
 }

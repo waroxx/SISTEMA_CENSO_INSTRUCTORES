@@ -463,7 +463,7 @@
         function habilitar(way,cargarST){
             way = way == undefined ? true : way
             cargarST=cargarST==undefined?true:cargarST
-            blockFields();//TODO acomodar el block para el otro radio
+            blockFields();
             if(!way){
                 return;
             }
@@ -491,7 +491,7 @@
         }
 
             function Requeridos(){
-                if($("#expNo").prop("checked")){ // TODO - acomodar para los 2 radio buttons
+                if ($("#expNo").prop("checked") && $("#formNo").prop("checked")) {
                     Enviar();
                     return;
                 }
@@ -565,21 +565,19 @@
                 }
 
                 function descargarTemas() {
-                    //$.ajax({
-                    //    type: "POST",
-                    //    url: "Formulario.aspx/getTema",
-                    //    contentType: "application/JSON",
-                    //    //data: "{'id':'" + id + "'}",
-                    //    success: function (resp) {
-                    //        localStorage.setItem('selTema', resp.d);
-                    //        console.log("campos de tema cargados");
-                    //    },
-                    //    error: function (xhr, status, error) {
-                    //        alert(xhr.responseText);
-                    //    }
-                    //});
-                    localStorage.setItem('selTema', '[{"id":"01","tema":"Metodología"},{"id":"02","tema":"Cartograía"},{"id":"03","tema":"Administrativo y Presupuesto"},{"id":"04","tema":"Tecnología"}]');
-                    console.log("campos de tema cargados");
+                    $.ajax({
+                        type: "POST",
+                        url: "Formulario.aspx/getTema",
+                        contentType: "application/JSON",
+                        success: function (resp) {
+                            localStorage.setItem('selTema', resp.d);
+                            console.log("campos de tema cargados");
+                        },
+                        error: function (xhr, status, error) {
+                            alert(xhr.responseText);
+                        }
+                    });
+                    //localStorage.setItem('selTema', '[{"id":"01","tema":"Metodología"},{"id":"02","tema":"Cartograía"},{"id":"03","tema":"Administrativo y Presupuesto"},{"id":"04","tema":"Tecnología"}]');
                 }
 
                 function cargarExperiencias(exps) {

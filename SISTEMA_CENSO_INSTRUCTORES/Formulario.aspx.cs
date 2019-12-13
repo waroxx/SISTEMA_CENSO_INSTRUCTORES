@@ -182,6 +182,22 @@ namespace SISTEMA_CENSO_INSTRUCTORES
         }
 
         [WebMethod]
+        public static string getTema()
+        {
+            try
+            {
+                DBConnections dbc = new DBConnections();
+                var temas = dbc.getTemas();
+                return temas;
+            }
+            catch (Exception e)
+            {
+                Debug.WriteLine(e.Message);
+                return "[]";
+            }
+        }
+
+        [WebMethod]
         public static string postExperiencias(string experiencias, string cedula)
         {
             WebForm2 f = new WebForm2();

@@ -336,6 +336,33 @@ namespace SISTEMA_CENSO_INSTRUCTORES.utilidades
             string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
             return json;
         }
+        public string getTemas()
+        {
+            DataTable dt = new DataTable();
+            var ConString = ConfigurationManager.ConnectionStrings["Contexto"].ToString();
+            var con = new SqlConnection(ConString);
+            SqlCommand cmd = new SqlCommand("SEL_TEMAS", con);
+
+            cmd.CommandType = CommandType.StoredProcedure;
+            con.Open();
+            SqlDataReader reader = cmd.ExecuteReader();
+            try
+            {
+                dt.Load(reader);
+            }
+            catch (Exception ex)
+            {
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+                return null;
+            }
+            finally
+            {
+                con.Close();
+                reader.Close();
+            }
+            string json = JsonConvert.SerializeObject(dt, Formatting.Indented);
+            return json;
+        }
 
         public JObject parseCedula(string ced)
         {
