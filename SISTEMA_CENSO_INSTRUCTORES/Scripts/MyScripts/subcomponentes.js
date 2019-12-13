@@ -71,8 +71,8 @@ function TEMA_visible(campos, selected) {
       '<div class="col-md-3" style="text-align:center"> <select class="form-control seltema" required="required"><option value="00">Seleccione</option> {{OPTIONS}} </select></div>';
     let options = "";
     campos.map(function (item) {
-        let op = '<option value="' + item.id + '">' + item.tema + "</option>";
-        if (item.id === selected) {
+        let op = '<option value="' + item.id.toString() + '">' + item.tema + "</option>";
+        if (item.id.toString() === selected) {
             op =
               '<option selected="selected" value="' +
               item.id +

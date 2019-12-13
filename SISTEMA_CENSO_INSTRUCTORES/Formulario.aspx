@@ -135,7 +135,7 @@
             </select>
         </div>
          <div class="col-md-2" style="text-align:center">
-            <input type="text" class="form-control year" id="year" maxlength="4" required="required" onkeyup="this.value=Numeros(this.value,this)"/>
+            <input type="text" class="form-control year" id="year" maxlength="4" required="required" onchange="this.value=Numeros(this.value,this)"/>
         </div>
          <div class="col-md-1" style="text-align:center">
              <a class="btn btn-danger eliminar" href="javascript:void(0);" aria-label="Delete">
