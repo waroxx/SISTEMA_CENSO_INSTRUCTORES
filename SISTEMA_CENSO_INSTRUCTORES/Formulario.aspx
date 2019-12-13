@@ -17,6 +17,7 @@
     <script src="Scripts/bootstrap-select.js"></script>
     <%--<link rel="stylesheet" type="text/css" href="~/estilos.css">--%>
     <%--<link href="Content/font-awesome.min.css" rel="stylesheet" />--%>
+    <script src="Scripts/MyScripts/Sweetalert.min.js"></script>
     <link href="Content/bootstrap-select.min.css" rel="stylesheet" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
     <script src="Scripts/MyScripts/componentes.js"></script>
@@ -359,11 +360,15 @@
                 data:"{'experiencias':'"+d+"', 'cedula':'"+ced+"'}",
                 success: function (resp) {
                     if (resp.d === "True") {
-                        alert("Datos Guadados con Éxito");
-                        location.reload();
+                        if (isIE()) {
+                            alert("Éxito, Datos correctamente Guadados");
+                            location.reload();
+                        } else {
+                            swal("Éxito", "Datos correctamente Guadados", "success").then(function (value) { location.reload(); });
+                        }
                     }
                    else if (resp.d === "False") {
-                        alert("Error: datos no guardados");
+                        swal("Error","Los datos no fueron guardados","error");
                     }
                     else {
                         alert(resp.d);
@@ -505,7 +510,7 @@
                     }
                 });
                 if(contador>=1){
-                    alert(contenido);
+                    swal("Ojo",contenido,"warning");
                 }
                 else{
                     Enviar();
@@ -604,9 +609,8 @@
                     });
                     //$(".selectpicker").selectpicker('refresh');
                 }
-                function modernizar() {
-                    var isIE = /*@cc_on!@*/false || !!document.documentMode;
-                    alert(isIE);
+                function isIE() {
+                    return /*@cc_on!@*/false || !!document.documentMode;       
                 }
     </script>
 </body>

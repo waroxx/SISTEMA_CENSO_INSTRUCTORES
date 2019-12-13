@@ -352,6 +352,7 @@
     <Content Include="Scripts\modernizr-2.6.2.js" />
     <Content Include="Scripts\MyScripts\componentes.js" />
     <Content Include="Scripts\MyScripts\subcomponentes.js" />
+    <Content Include="Scripts\MyScripts\Sweetalert.min.js" />
     <Content Include="Scripts\otroScript\popper.min.js" />
     <Content Include="Scripts\popper-utils.js" />
     <Content Include="Scripts\popper-utils.min.js" />
